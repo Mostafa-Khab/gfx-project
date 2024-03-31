@@ -7,3 +7,19 @@
 ## HELP:-
 ### if you want to do some kind of review. start with the system folder as it has stuff that is less related to OpenGL.
 ### in the graphics folder there is files that have classes related more to OpenGL and GLFW.
+## Creating similar project?
+### if you are interested in making a similar project from scratch, you can study this project.
+#### start with system:-
+##### 1. vectors
+##### 2. colors
+##### 3. clock
+##### 4. debug
+##### 5. callbacks
+#### then go to graphics:-
+##### 1. context
+##### 2. shader
+##### 3. program
+##### 4. buffer
+##### 5. polygon
+##### 6. view
+#### these topics consist of more than one file (hpp + cpp) with -std=c++17 at least (for compiling)
