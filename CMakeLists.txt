@@ -35,7 +35,7 @@ set(SOURCES
     system/callbacks.cpp
     system/debug.cpp
     system/clock.cpp
-    stb_image.cpp
+    system/stb_image.cpp
   
     graphics/context.hpp
     graphics/vertex.hpp
