@@ -2,16 +2,21 @@ cmake_minimum_required(VERSION 3.25)
 project(MY_MAIN_PROJ)
 
 #set(CMAKE_CXX_STANDARD 11)
-set(DEPS_PATH /home/sasa/glfw-3.3.9/deps/)
+set(DEPS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/deps/)
 
 if(UNIX)
   find_package(glfw3 3.3 REQUIRED)
   find_package(OpenGL REQUIRED)
   message(STATUS "compiling GFX for Unix")
 elseif(WIN32)
+# NOTE: this is cross-compiling on linux for windows.
+# make sure to specify the GLFW dir in the following functions
+# /usr/i686-w64-mingw32/local/ is the folder Where GFX include, lib are stored.
+  set(CMAKE_INSTALL_PREFIX /usr/i686-w64-mingw32/local/)
+
   include_directories(/usr/i686-w64-mingw32/local/include/)
   link_directories(/usr/i686-w64-mingw32/local/lib/)
-  set(CMAKE_INSTALL_PREFIX /usr/i686-w64-mingw32/local/)
+
   message(STATUS "compiling GFX for WIN32")
 endif()
 
@@ -48,13 +53,13 @@ set(SOURCES
 
 include_directories(graphics system ${DEPS_PATH})
 
-add_library(glx STATIC ${SOURCES})
+add_library(gfx STATIC ${SOURCES})
 
 add_executable(main ${DEPS_PATH}/glad_gl.c main.cpp)
 
 if(UNIX)
   target_link_libraries(main
-      glx            #before every other library when compiling source;
+      gfx            #before every other library when compiling source;
       glfw
       OpenGL::GL
       Xrandr
@@ -69,7 +74,7 @@ endif(UNIX)
 
 if(WIN32)
   target_link_libraries(main PUBLIC
-    glx
+    gfx
     glfw3
     opengl32
     gdi32
@@ -79,7 +84,7 @@ if(WIN32)
 endif(WIN32)
 
 install(
-  TARGETS glx DESTINATION lib
+  TARGETS gfx DESTINATION lib
 )
 
 install(
