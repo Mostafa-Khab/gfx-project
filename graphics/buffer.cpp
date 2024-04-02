@@ -87,12 +87,6 @@ void Buffer<T>::modify()
 template <typename T>
 void Buffer<T>::draw(GLenum primative)
 {
-//  if(m_type == VERTEX)
-//  {
-//    glDrawArrays(primative, 0, m_data.size());
-//  }
-
-
   switch(m_type)
   {
     case VERTEX:

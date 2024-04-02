@@ -14,10 +14,7 @@ Context::Context() : m_terminated(false)
 
 Context::~Context()
 {
-  if(!m_terminated)
-  {
     terminate();
-  }
 }
 
 void Context::setVersion(Context::version v)
