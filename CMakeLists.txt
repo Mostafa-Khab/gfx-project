@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.25)
 project(MY_MAIN_PROJ)
 
 #set(CMAKE_CXX_STANDARD 11)
+#just nothing
 set(DEPS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/deps/)
 
 if(UNIX)
