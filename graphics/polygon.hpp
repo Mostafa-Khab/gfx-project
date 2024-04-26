@@ -29,6 +29,11 @@ class Polygon
     void draw(GLenum primative = GL_TRIANGLE_FAN);
 
     void get_data(Buffer<T>& verticies);
+    T& operator[] (std::size_t index);
+    
+    std::size_t size();
+    void modify();
+    void remove();
 
   private:
     float     m_radius;

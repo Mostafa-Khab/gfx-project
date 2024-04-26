@@ -50,6 +50,7 @@ bool Context::init()
                               NULL, NULL);
   if(!m_window)
   {
+    Log::debug("failed to create window in Context::init()");
     return false;
   }
 
@@ -95,5 +96,6 @@ void Context::terminate()
   {
     m_terminated = true;
     glfwTerminate();
+    Log::debug("shutdown opengl context");
   }
 }

@@ -1,5 +1,8 @@
 #include <glad/gl.h>
 #include <typeinfo>
+
+#include <debug.hpp>
+
 #include "vertex.hpp"
 #include "buffer.hpp"
 
@@ -18,7 +21,7 @@ Buffer<T>::Buffer()
 template <typename T>
 Buffer<T>::~Buffer()
 {
-  glDeleteBuffers(1, &m_id);
+  remove();
 }
 
 template <typename T>
@@ -124,6 +127,19 @@ void Buffer<T>::reserve(std::size_t size)
   m_data.reserve(size);
 }
 
+template <typename T>
+void Buffer<T>::remove()
+{
+  if(!m_removed)
+  {
+    m_removed = true;
+    glDeleteBuffers(1, &m_id);
+    std::string buff = (m_type == INDEX)? "index" : "vertex";
+    buff += " buffer";
+    Log::debug("deleting " + buff);
+  }
+}
+
 
 template <typename T>
 void vBuffer<T>::set_attributes()
@@ -152,4 +168,3 @@ template class vBuffer<texVertex>;
 template class vBuffer<texVertexNoRGB>;
 
 template class Buffer<unsigned int>;
-

@@ -4,7 +4,8 @@
  *  why    : for debugging openGL code 
 *************************/ 
 
-#include <string>
+#include <string_view>
+#include <logger.hpp>
 
 namespace test
 {

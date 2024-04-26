@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 
+#include <debug.hpp>
 #include "shader.hpp"
 
 Shader::Shader(Shader::Type type): m_type(type), m_deleted(false)
@@ -23,6 +24,7 @@ bool Shader::load(std::string path)
 
   if(!file.is_open()) 
   {
+     Log::debug("failed to open shader file");
      return false;
   }
 
@@ -42,6 +44,7 @@ void Shader::remove()
   {
     m_deleted = true;
     glDeleteShader(m_id);
+    Log::debug("marking shader for deletion");
   }
 }
 

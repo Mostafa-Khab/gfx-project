@@ -26,9 +26,10 @@ class Buffer
     void append(T&&);
     void resize(std::size_t size);
     void reserve(std::size_t size);
+    void remove();
 
     void bind();
-    void unbind();  //do nothing till now
+    void unbind();
     void load_data(GLenum usage = GL_STATIC_DRAW);  //based on the data provided in the vector of vertices.
     void modify();  //modify based in m_data. update data in m_data then call this to update. GL_DYNAMIC_DRAW
 
@@ -43,6 +44,7 @@ class Buffer
     unsigned int    m_id;
     std::vector<T>  m_data;
     Type            m_type;
+    bool            m_removed;
 
   public:
     friend class Context;

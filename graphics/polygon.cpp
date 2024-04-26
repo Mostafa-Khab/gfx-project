@@ -94,6 +94,30 @@ void Polygon<T>::draw(GLenum usage)
   m_vertices.draw(usage);
 }
 
+template <typename T>
+T& Polygon<T>::operator[] (std::size_t index)
+{
+  return m_vertices[index];
+}
+
+template <typename T>
+std::size_t Polygon<T>::size()
+{
+  return m_vertices.size();
+}
+
+template <typename T>
+void Polygon<T>::modify()
+{
+  return m_vertices.modify();
+}
+
+template <typename T>
+void Polygon<T>::remove()
+{
+  return m_vertices.remove();
+}
+
 template class Polygon<Vertex>;
 template class Polygon<VertexEx>;
 template class Polygon<texVertex>;

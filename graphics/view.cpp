@@ -1,4 +1,5 @@
 #include <glad/gl.h>
+#define GLFW_INCLUDE_NONE //can this cause an error
 #include <GLFW/glfw3.h>
 #include "view.hpp"
 

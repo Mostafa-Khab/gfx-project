@@ -1,5 +1,5 @@
 #include <glad/gl.h>
-#include "../system/debug.hpp"
+#include <debug.hpp>
 #include "program.hpp"
 
 Program::Program()
@@ -9,7 +9,7 @@ Program::Program()
 
 Program::~Program()
 {
-  glDeleteProgram(m_id);
+  remove();
 }
 
 void Program::attachShaders(Shader& vertex, Shader& frag)
@@ -28,6 +28,15 @@ void Program::use()
   glUseProgram(m_id);
 }
 
+void Program::remove()
+{
+  if(!m_removed) {
+    glDeleteProgram(m_id);
+    m_removed = true;
+    Log::debug("deleting opengl shader prgram");
+  }
+}
+
 int Program::getUniformLocation(const char* name)
 {
   return glGetUniformLocation(m_id, name);
@@ -44,7 +53,7 @@ bool create_glsl_program(Program& program, std::string vshader_file, std::string
   bool result = vshader.load(vshader_file);
   if(!result)
   {
-    test::dprint("failed to load vertex shader\n");
+    Log::debug("create_glsl_program(...) failed to load vertex shader");
     return false;
   }
   vshader.create();
@@ -53,7 +62,7 @@ bool create_glsl_program(Program& program, std::string vshader_file, std::string
   result = fshader.load(fshader_file);
   if(!result)
   {
-    test::dprint("failed to load fragment shader\n");
+    Log::debug("create_glsl_program(...) failed to load fragment shader");
     return false;
   }
   fshader.create();

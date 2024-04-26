@@ -18,12 +18,14 @@ class Program
     void attachShaders(Shader& vertex_shader, Shader& fragment_shader);
     void link();
     void use();
+    void remove();
 
     int getUniformLocation(const char* name_in_program);
     int getAttribLocation(const char* name_in_program);
 
   private:
     unsigned int      m_id;
+    bool              m_removed = false;
 };
 
 bool create_glsl_program(Program& program, std::string vshader_file, std::string fshader_file);
