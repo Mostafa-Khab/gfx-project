@@ -4,19 +4,17 @@
  *  why    : for debugging openGL code 
 *************************/ 
 
-#include <string_view>
 #include <logger.hpp>
+
+//if x == false exit must be called within main() function
+#define ASSERT(x, y) if((x) == false) { Log::info((y)); return -1;}
+//same as assert but terminates glfw.
+#define GLFW_ASSERT(x, y) if((x) == false) { glfwTerminate(); Log::info((y)); return -1;}
 
 namespace test
 {
   void print (std::string_view string); //print a certian message
   void dprint(std::string_view string); //print a certian message if DEBUG or _DEBUG
-
-  void assert (bool expr, std::string_view error_msg, int code = -1); //make sure expr is true. exit if it isn't.
-  void dassert(bool expr, std::string_view error_msg, int code = -1); //make sure expr is true. exit if it isn't. DEBUG or _DEBUG
-
-  void glfw_assert (bool expr, std::string_view error_msg, int code = -1);
-  void dglfw_assert(bool expr, std::string_view error_msg, int code = -1);
 
   char pause();
 }

@@ -1,0 +1,32 @@
+# adding gfx namespace
+# most classes became lower case
+
+# system
+- Vector2           -> gfx::vector2
+- Vector3           -> gfx::vector3
+- Clock             -> gfx::clock
+- RGB               -> gfx::rgb
+- RGBA              -> gfx::rgba
+- callback::key     -> gfx::callback::key
+- callback::error   -> gfx::callback::error
+
+# system (new)
+* interpolators (hpp + cpp)
+  - gfx::lerp
+  - gfx::clamp
+
+<-------------------------------------------------->
+
+
+# graphics
+- Shader            -> gfx::shader
+- Program           -> gfx::program
+- Context           -> gfx::context
+- Buffer<T>         -> gfx::buffer<T>
+- vBuffer<T>        -> gfx::vbuffer<T>
+- Polygon<T>        -> gfx::polygon<T>
+- Vertex            -> gfx::vertex2d
+- VertexEx          -> gfx::vertex3d
+- texVertex         -> gfx::vertex3dtex
+- texVertexNoRGB    -> gfx::vertex_tex
+- View              -> gfx::view

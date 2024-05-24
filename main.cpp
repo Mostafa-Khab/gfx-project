@@ -2,88 +2,134 @@
 #include <iostream>
 #include "graphics.hpp"
 #include "system.hpp"
-#include "linmath.h"
 
-void handleInput(GLFWwindow* window, Buffer<Vertex>& vertex_buffer, float dt);
+// if you run make install use (#include "GFX/graphics.hpp") instead
+// if you run make install use (#include "GFX/system.hpp") instead
+
+//void handleInput(GLFWwindow* window, gfx::vbuffer<gfx::vertex2d>& vertex_buffer, float dt);
+
+float f(float x)
+{
+  x -= 1.5f;
+  return x * x;
+}
+
+void print(gfx::vbuffer<gfx::vertex2d>& );
+
+const gfx::vector2f end(1.f, 1.f);
+
+//t is the step that depends on time!!
+void lerp(gfx::vbuffer<gfx::vertex2d>& vbuff, gfx::vector2f& centre, float size, float t)
+{
+  if (t > 0.9)
+    return;
+  
+  vbuff[0].x = gfx::lerp(centre.x + size, end.x + size, t);
+  vbuff[0].y = gfx::lerp(centre.y - size, end.y - size, t);
+
+  vbuff[1].x = gfx::lerp(centre.x - size, end.x - size, t);
+  vbuff[1].y = gfx::lerp(centre.y - size, end.y - size, t);
+
+  vbuff[2].x = gfx::lerp(centre.x + size, end.x + size, t);
+  vbuff[2].y = gfx::lerp(centre.y + size, end.y + size, t);
+
+  vbuff[3].x = gfx::lerp(centre.x - size, end.x - size, t);
+  vbuff[3].y = gfx::lerp(centre.y + size, end.y + size, t);
+
+  //print(vbuff);
+  vbuff.modify();
+}
+
+void print(gfx::vbuffer<gfx::vertex2d>& vbuff)
+{
+  for(int i = 0; i < vbuff.size(); ++i)
+  {
+    std::cout << vbuff[i].x << ' ' << vbuff[i].y << '\n';
+  }
+}
 
 int main()
 {
-  const int width = 800;
-  const int height = 600;
-  Context context;
+  constexpr int width  = 700;
+  constexpr int height = 700;
+
+  gfx::context context;
   context.setVersion({ 2 , 0 });
-  context.setWindowData(800, 600, "my window");
+  context.setWindowData(width, height, "gfx-test");
 
-  bool result = context.init(); //a window is created in here. you can get a pointer to that window
-  test::glfw_assert(result, "failed to init context");
+  //a window is created in here. you can get a pointer to that window
+  bool result = context.init();
+  GLFW_ASSERT(result, "failed to init gfx context");
 
-  Buffer<Vertex> vertex_buffer;
-  Buffer<unsigned int> index_buffer;
-  index_buffer.append(0);
-  index_buffer.append(1);
-  index_buffer.append(2);
-  index_buffer.append(1);
-  index_buffer.append(2);
-  index_buffer.append(3);
-  index_buffer.bind();
-  index_buffer.load_data(GL_DYNAMIC_DRAW);
+  gfx::vector2f centre(-0.7f , -0.7f);
+  float size = 0.2f;
 
+  gfx::vertex2d_buf vertex_buffer;
   vertex_buffer.bind();
-  
-  vertex_buffer.append(Vertex( 0.2, -0.2, 1.0, 0.4, 0.2));
-  vertex_buffer.append(Vertex(-0.2, -0.2, 1.0, 0.4, 0.2));
-  vertex_buffer.append(Vertex( 0.2,  0.2, 0.6, 0.4, 0.2));
-  vertex_buffer.append(Vertex(-0.2,  0.2, 0.6, 0.4, 0.2));
+  vertex_buffer.append(gfx::vertex2d(centre.x + size, centre.y - size, 1.0, 0.4, 0.2));
+  vertex_buffer.append(gfx::vertex2d(centre.x - size, centre.y - size, 1.0, 0.4, 0.2));
+  vertex_buffer.append(gfx::vertex2d(centre.x + size, centre.y + size, 0.6, 0.4, 0.2));
+  vertex_buffer.append(gfx::vertex2d(centre.x - size, centre.y + size, 0.6, 0.4, 0.2));
   
   vertex_buffer.load_data(GL_STATIC_DRAW);
   
-  Shader vertex_shader(Shader::VERTEX);
-  test::glfw_assert(vertex_shader.load("../shaders/shader.vert"), "failed to load vertex shader");
+  gfx::shader vertex_shader(gfx::shader::VERTEX);
+  result = vertex_shader.load("../shaders/default.vert");
+  if(!result)
+  {
+    glfwTerminate();
+    return -1;
+  }
   vertex_shader.create();
 
-  Shader fragment_shader(Shader::FRAGMENT);
-  test::glfw_assert(fragment_shader.load("../shaders/shader.frag"), "failed to load fragment shader");
+  gfx::shader fragment_shader(gfx::shader::FRAGMENT);
+  result = fragment_shader.load("../shaders/default.frag");
+  if(!result)
+  {
+    glfwTerminate();
+    return -1;
+  }
   fragment_shader.create();
 
-  Program program;
-  program.attachShaders(vertex_shader, fragment_shader);
-  program.link();
+  gfx::program prg;
+  prg.attachShaders(vertex_shader, fragment_shader);
+  prg.link();
 
-  int mvp_location  = program.getUniformLocation("MVP");
-  Attributes::vpos_location() = program.getAttribLocation("vPos");
-  Attributes::vcol_location() = program.getAttribLocation("vCol");
-
-  Vertex::set_attributes();
+  int mvp_location  = prg.getUniformLocation("MVP");
+  gfx::attributes::vpos_location() = prg.getAttribLocation("vPos");
+  gfx::attributes::vcol_location() = prg.getAttribLocation("vCol");
 
   GLFWwindow* window;
   context.getWindow(window);
 
-  auto tp = datetime(2006, 10, 5, 27, 20);
-  std::cout << strtime(tp);
+  auto tp = gfx::datetime(2006, 10, 5, 27, 20);
+  std::cout << gfx::strtime(tp);
   
-  glfwSetKeyCallback(window, callback::key);
-  Clock c, cf;
+  glfwSetKeyCallback(window, gfx::callback::key);
+  gfx::clock c, cf;
   int   frq;
   float dt;
 
-  View view(width, height);
+  gfx::view vw(width, height);
 
+  float t = 0;
   while(!context.should_close())
   {
     dt = cf.restart();
 
-    view.update(window);
-    mat4x4_identity(view.m());
-    view.ortho();
-    view.multiply();
+    vw.update(window);
+    vw.ortho();
+    vw.multiply();
 
-    handleInput(window, vertex_buffer, dt);
+ //   handleInput(window, vertex_buffer, dt);
+    lerp(vertex_buffer, centre, size, t);
+    t += dt * 0.3f;
 
-    program.use();
+    prg.use();
+    vw.set_mvp(mvp_location);
 
-    view.set_mvp(mvp_location);
-    context.clear(0.15f, 0.3f, 0.3f, 1.f);
-    index_buffer.draw(GL_TRIANGLES);
+    context.clear(gfx::rgba(0.f,0.f,0.f,1.f), GL_COLOR_BUFFER_BIT);
+    vertex_buffer.draw(GL_TRIANGLE_STRIP);
     context.display();
     
     if(c.elapsed() > 1.f)
@@ -97,15 +143,15 @@ int main()
 
   }
 
-  //context.terminate();
+  //contxt.terminate();
   return 0;
 }
 
-void handleInput(GLFWwindow* window, Buffer<Vertex>& vertex, float dt)
+void handleInput(GLFWwindow* window, gfx::vbuffer<gfx::vertex2d>& vertex, float dt)
 {
   bool updated = false;
   float speed = 2.5;
-  if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && vertex[0].x < 1.f)
+  if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
   {
     for(int i = 0; i < 4; ++i)
     {
@@ -114,7 +160,7 @@ void handleInput(GLFWwindow* window, Buffer<Vertex>& vertex, float dt)
       updated = true;
   }
 
-  if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS && vertex[1].x > -1.f)
+  if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
   {
     for(int i = 0; i < 4; ++i)
     {
@@ -123,7 +169,7 @@ void handleInput(GLFWwindow* window, Buffer<Vertex>& vertex, float dt)
       updated = true;
   }
 
-  if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && vertex[2].y < 1.f)
+  if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
   {
     for(int i = 0; i < 4; ++i)
     {
@@ -132,7 +178,7 @@ void handleInput(GLFWwindow* window, Buffer<Vertex>& vertex, float dt)
       updated = true;
   }
 
-  if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && vertex[0].y > -1.f)
+  if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
   {
     for(int i = 0; i < 4; ++i)
     {

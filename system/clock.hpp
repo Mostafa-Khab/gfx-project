@@ -8,21 +8,25 @@
 
 #include <chrono>
 
-class Clock
+namespace gfx
 {
-  public:
-    Clock();
-   ~Clock() = default;
 
-   float elapsed();
-   float restart();
+  class clock
+  {
+    public:
+      clock();
+     ~clock() = default;
 
-  private:
-    std::chrono::high_resolution_clock::time_point m_start;
-};
+     float elapsed();
+     float restart();
+
+    private:
+      std::chrono::high_resolution_clock::time_point m_start;
+  };
 
   std::chrono::system_clock::time_point datetime(int year, int month, int day, int hour, int minute);
   std::chrono::system_clock::time_point datetime(int year, int month, int day);
   std::string strtime(const std::chrono::system_clock::time_point& tp);
 
+}
 #endif /* !CLOCK_HPP */

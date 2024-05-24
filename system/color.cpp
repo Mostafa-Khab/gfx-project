@@ -1,13 +1,19 @@
 #include "color.hpp"
 
-RGB::RGB(float _r, float _g, float _b)
-  :r(_r), g(_g), b(_b)
+namespace gfx
 {
+
+  rgb::rgb(float _r, float _g, float _b)
+    :r(_r), g(_g), b(_b)
+  {
+
+  }
+
+  rgba::rgba(float _r, float _g, float _b, float _a)
+    :r(_r), g(_g), b(_b), a(_a)
+  {
+
+  }
 
 }
 
-RGBA::RGBA(float _r, float _g, float _b, float _a)
-  :r(_r), g(_g), b(_b), a(_a)
-{
-
-}

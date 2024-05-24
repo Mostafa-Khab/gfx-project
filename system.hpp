@@ -11,6 +11,7 @@
 #include "system/vectors.hpp"
 #include "system/callbacks.hpp"
 #include "system/clock.hpp"
+#include "system/interpolators.hpp"
 
 
 #endif

@@ -5,8 +5,14 @@
 *************************/ 
 struct GLFWwindow;
 
-namespace callback
+namespace gfx
 {
-  void error(int error, const char* desc);
-  void key(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+  namespace callback
+  {
+    void error(int error, const char* desc);
+    void key(GLFWwindow* window, int key, int scancode, int action, int mods);
+  }
+
 }
+

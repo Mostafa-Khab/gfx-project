@@ -9,27 +9,30 @@
 
 #include <string>
 
-class Shader 
+namespace gfx
 {
-  public:
-    enum Type { VERTEX, FRAGMENT, NONE };
 
-  public:
-    Shader(Type t = NONE);
-   ~Shader();
+  class shader 
+  {
+    public:
+      enum Type { VERTEX, FRAGMENT, NONE };
 
-    bool load(std::string file_path);
-    void remove(); //delete but the name is used
-    void create();
-                   
-    const unsigned int& getID();
+    public:
+      shader(Type t = NONE);
+     ~shader();
 
-  private:
-    Type              m_type;
-    unsigned int      m_id;
-    std::string       m_source;
-    bool              m_deleted;
-};
+      bool load(std::string file_path);
+      void remove(); //delete but the name is used
+      void create();
+                     
+      const unsigned int& getID();
 
+    private:
+      Type              m_type;
+      unsigned int      m_id;
+      std::string       m_source;
+      bool              m_deleted;
+  };
 
+}
 #endif

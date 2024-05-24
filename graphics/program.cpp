@@ -1,34 +1,42 @@
 #include <glad/gl.h>
 #include <debug.hpp>
+
+#include <logger.hpp>
+
+
 #include "program.hpp"
 
-Program::Program()
+namespace gfx
+{
+
+
+program::program()
 {
   m_id = glCreateProgram();
 }
 
-Program::~Program()
+program::~program()
 {
   remove();
 }
 
-void Program::attachShaders(Shader& vertex, Shader& frag)
+void program::attachShaders(shader& vertex, shader& frag)
 {
   glAttachShader(m_id, vertex.getID());
   glAttachShader(m_id, frag.getID());
 }
 
-void Program::link()
+void program::link()
 {
   glLinkProgram(m_id);
 }
 
-void Program::use()
+void program::use()
 {
   glUseProgram(m_id);
 }
 
-void Program::remove()
+void program::remove()
 {
   if(!m_removed) {
     glDeleteProgram(m_id);
@@ -37,37 +45,40 @@ void Program::remove()
   }
 }
 
-int Program::getUniformLocation(const char* name)
+int program::getUniformLocation(const char* name)
 {
   return glGetUniformLocation(m_id, name);
 }
 
-int Program::getAttribLocation(const char* name)
+int program::getAttribLocation(const char* name)
 {
   return glGetAttribLocation(m_id, name);
 }
 
-bool create_glsl_program(Program& program, std::string vshader_file, std::string fshader_file)
+bool program::create(std::string vshader_file,std::string fshader_file)
 {
-  Shader vshader(Shader::Type::VERTEX);
+
+  shader vshader(shader::Type::VERTEX);
   bool result = vshader.load(vshader_file);
   if(!result)
   {
-    Log::debug("create_glsl_program(...) failed to load vertex shader");
+    Log::debug("glsl program creation failed to load vertex shader");
     return false;
   }
   vshader.create();
 
-  Shader fshader(Shader::Type::FRAGMENT);
+  shader fshader(shader::Type::FRAGMENT);
   result = fshader.load(fshader_file);
   if(!result)
   {
-    Log::debug("create_glsl_program(...) failed to load fragment shader");
+    Log::debug("glsl program creation failed to load fragment shader");
     return false;
   }
   fshader.create();
 
-  program.attachShaders(vshader, fshader);
+  attachShaders(vshader, fshader);
 
   return true;
+}
+
 }

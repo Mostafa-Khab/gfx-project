@@ -12,48 +12,50 @@
 
 #include "../system/color.hpp"
 
-struct RGBA;
-
-class Context
+namespace gfx
 {
-  public:
-   struct version
-   {
-     int major;
-     int minor;
-   };
 
-  public:
-    Context();
-   ~Context();
+  class context
+  {
+    public:
+     struct version
+     {
+       int major;
+       int minor;
+     };
 
-   void setVersion   (version v);
-   version getVersion();
+    public:
+      context();
+     ~context();
 
-   void setWindowData(int w, int h, std::string name);
+     void setVersion   (version v);
+     version getVersion();
 
-   bool init();
+     void setWindowData(int w, int h, std::string name);
 
-  // void createWindow(int width, int height, std::string name);
-   void getWindow(GLFWwindow*& window);
+     bool init();
 
-   void clear(float r = 0, float g = 0, float b = 0, float a = 1, int targets = GL_COLOR_BUFFER_BIT);
-   void clear(RGBA color = RGBA(0,0,0,1), int targets = GL_COLOR_BUFFER_BIT);
-   void display();
+    // void createWindow(int width, int height, std::string name);
+     void getWindow(GLFWwindow*& window);
 
-   bool should_close();
-   void terminate();
+     void clear(float r = 0, float g = 0, float b = 0, float a = 1, int targets = GL_COLOR_BUFFER_BIT);
+     void clear(rgba color = rgba(0,0,0,1), int targets = GL_COLOR_BUFFER_BIT);
+     void display();
 
-  private:
-   GLFWwindow* m_window;
-   version     m_version;
+     bool should_close();
+     void terminate();
 
-   int         m_window_size_x;
-   int         m_window_size_y;
-   std::string m_window_name;
+    private:
+     GLFWwindow* m_window;
+     version     m_version;
 
-   bool        m_terminated;
+     int         m_window_size_x;
+     int         m_window_size_y;
+     std::string m_window_name;
 
-};
+     bool        m_terminated;
 
+  };
+
+}
 #endif

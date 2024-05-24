@@ -7,41 +7,45 @@
 #ifndef POLYGON_HPP
 #define POLYGON_HPP
 
-template <typename T>
-class Polygon
+namespace gfx
 {
-  public:
-    explicit Polygon(int sides , float radius);
-    ~Polygon() = default;
 
-    void generate_buffer_data();
-    void create_using_data(GLenum usage = GL_STATIC_DRAW);
-    
-    void load_data(GLenum usage = GL_STATIC_DRAW);
-    void bind();
-    void unbind();
+  template <typename T>
+  class polygon
+  {
+    public:
+      explicit polygon(int sides , float radius);
+      ~polygon() = default;
 
-    void setRadius(float radius);
-    void setRotation(float angle);
-    void setSides(int sides);
-    void setData(T data);
+      void generate_buffer_data();
+      void create_using_data(GLenum usage = GL_STATIC_DRAW);
+      
+      void load_data(GLenum usage = GL_STATIC_DRAW);
+      void bind();
+      void unbind();
 
-    void draw(GLenum primative = GL_TRIANGLE_FAN);
+      void setRadius(float radius);
+      void setRotation(float angle);
+      void setSides(int sides);
+      void setData(T data);
 
-    void get_data(Buffer<T>& verticies);
-    T& operator[] (std::size_t index);
-    
-    std::size_t size();
-    void modify();
-    void remove();
+      void draw(GLenum primative = GL_TRIANGLE_FAN);
 
-  private:
-    float     m_radius;
-    float     m_rotation;
-    int       m_sides;
-    T         m_data; //a Vertex Type that carry position and color data.
-    vBuffer<T> m_vertices;
+      void get_data(vbuffer<T>& verticies);
+      T& operator[] (std::size_t index);
+      
+      std::size_t size();
+      void modify();
+      void remove();
 
-};
+    private:
+      float      m_radius;
+      float      m_rotation;
+      int        m_sides;
+      T          m_data;     //Vertex Type that carries position and color data.
+      vbuffer<T> m_vertices;
 
+  };
+
+}
 #endif /* !POLYGON_HPP */

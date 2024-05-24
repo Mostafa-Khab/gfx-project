@@ -6,101 +6,105 @@
 #ifndef VERTEX_HPP
 #define VERTEX_HPP
 
-struct RGB;
-struct RGBA;
-
-template <typename T> class Vector2;
-template <typename T> class Vector3;
-
-class Attributes
+namespace gfx
 {
-  public:
-    static int& vpos_location() {static int loc; return loc; }
-    static int& vcol_location() {static int loc; return loc; }
-    static int& vtex_location() {static int loc; return loc; }
-};
 
-struct Vertex
-{
-  float x, y, r, g, b;
+  struct rgb;
+  struct rgba;
 
-  Vertex() = default;
-  Vertex(float x, float y, float r, float g, float b);
-  Vertex(float x, float y, RGB color);
-  Vertex(Vector2<float> , RGB color);
- ~Vertex() = default;
+  template <typename T> class vector2;
+  template <typename T> class vector3;
 
-  Vertex(const Vertex& ) = default;
-  Vertex(Vertex&&)       = default;
+  class attributes
+  {
+    public:
+      static int& vpos_location() { static int val = 0; return val;}
+      static int& vcol_location() { static int val = 0; return val;}
+      static int& vtex_location() { static int val = 0; return val;}
+  };
 
-  Vertex& operator= (const Vertex& );
-  Vertex& operator= (Vertex&&);
+  struct vertex2d
+  {
+    float x, y, r, g, b;
 
-  static void set_attributes();
-  
-};
+    vertex2d() = default;
+    vertex2d(float x, float y, float r, float g, float b);
+    vertex2d(float x, float y, rgb color);
+    vertex2d(vector2<float> , rgb color);
+   ~vertex2d() = default;
 
-struct VertexEx
-{
-  float x, y, z, r, g, b, a;
+    vertex2d(const vertex2d& ) = default;
+    vertex2d(vertex2d&&)       = default;
 
-  VertexEx() = default;
-  VertexEx(float x, float y, float z, float r, float g, float b, float a);
-  VertexEx(float x, float y, float z, RGBA color);
-  VertexEx(Vector3<float> , RGBA color);
- ~VertexEx() = default;
+    vertex2d& operator= (const vertex2d& );
+    vertex2d& operator= (vertex2d&&);
 
-  VertexEx(const VertexEx& ) = default;
-  VertexEx(VertexEx&&)       = default;
+    static void set_attributes();
+    
+  };
 
-  VertexEx& operator= (const VertexEx& );
-  VertexEx& operator= (VertexEx&&);
-  
-  static void set_attributes();
-};
+  struct vertex3d
+  {
+    float x, y, z, r, g, b, a;
 
-struct texVertex
-{
-  float x, y, z, r, g, b, a, u, v;
+    vertex3d() = default;
+    vertex3d(float x, float y, float z, float r, float g, float b, float a);
+    vertex3d(float x, float y, float z, rgba color);
+    vertex3d(vector3<float> , rgba color);
+   ~vertex3d() = default;
 
-  texVertex() = default;
-  texVertex(float x, float y, float z, float r, float g, float b, float a, float u, float v);
-  texVertex(float x, float y, float z, RGBA color, Vector2<float> tex_coords);
-  texVertex(Vector3<float> , RGBA color, Vector2<float> tex_coords);
- ~texVertex() = default;
+    vertex3d(const vertex3d& ) = default;
+    vertex3d(vertex3d&&)       = default;
 
-  texVertex(const texVertex& ) = default;
-  texVertex(texVertex&&)       = default;
+    vertex3d& operator= (const vertex3d& );
+    vertex3d& operator= (vertex3d&&);
+    
+    static void set_attributes();
+  };
 
-  texVertex& operator= (const texVertex& );
-  texVertex& operator= (texVertex&&);
-  
-  static void set_attributes();
-};
+  struct vertex3dtex
+  {
+    float x, y, z, r, g, b, a, u, v;
+
+    vertex3dtex() = default;
+    vertex3dtex(float x, float y, float z, float r, float g, float b, float a, float u, float v);
+    vertex3dtex(float x, float y, float z, rgba color, vector2<float> tex_coords);
+    vertex3dtex(vector3<float> , rgba color, vector2<float> tex_coords);
+   ~vertex3dtex() = default;
+
+    vertex3dtex(const vertex3dtex& ) = default;
+    vertex3dtex(vertex3dtex&&)       = default;
+
+    vertex3dtex& operator= (const vertex3dtex& );
+    vertex3dtex& operator= (vertex3dtex&&);
+    
+    static void set_attributes();
+  };
 
 
-struct texVertexNoRGB
-{
-  float x, y, z, u, v;
+  struct vertex_tex
+  {
+    float x, y, z, u, v;
 
-  texVertexNoRGB() = default;
-  texVertexNoRGB(float x, float y, float z, float u, float v);
-  texVertexNoRGB(float x, float y, float z, Vector2<float> tex_coords);
-  texVertexNoRGB(Vector3<float> , Vector2<float> tex_coords);
- ~texVertexNoRGB() = default;
+    vertex_tex() = default;
+    vertex_tex(float x, float y, float z, float u, float v);
+    vertex_tex(float x, float y, float z, vector2<float> tex_coords);
+    vertex_tex(vector3<float> , vector2<float> tex_coords);
+   ~vertex_tex() = default;
 
-  texVertexNoRGB(const texVertexNoRGB& ) = default;
-  texVertexNoRGB(texVertexNoRGB&&)       = default;
+    vertex_tex(const vertex_tex& ) = default;
+    vertex_tex(vertex_tex&&)       = default;
 
-  texVertexNoRGB& operator= (const texVertexNoRGB& );
-  texVertexNoRGB& operator= (texVertexNoRGB&&);
-  
-  static void set_attributes();
-};
+    vertex_tex& operator= (const vertex_tex& );
+    vertex_tex& operator= (vertex_tex&&);
+    
+    static void set_attributes();
+  };
 
-typedef Vertex          Vertex2D;
-typedef VertexEx        Vertex3D;
-typedef texVertex       RGB_TexVertex3D; 
-typedef texVertexNoRGB  TexVertex3D;
+}
+//typedef vertex2d           Vertex2D;
+//typedef vertex3d           Vertex3D;
+//typedef vertex3dtex        RGB_TexVertex3D; 
+//typedef vertex_tex         TexVertex3D;
 
 #endif

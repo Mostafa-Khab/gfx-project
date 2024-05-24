@@ -1,6 +1,6 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include <string>
+#include <string_view>
 
 
 #include "debug.hpp"
@@ -19,49 +19,7 @@ namespace test
 #endif
   }
 
-  void assert(bool expr, std::string_view msg, int code)
-  {
-    if(!expr)
-    {
-      std::cerr << msg << '\n';
-      std::exit(code);
-    }
-  }
 
-  void dassert(bool expr, std::string_view msg, int code)
-  {
-#if defined(DEBUG) | defined(_DEBUG)
-    if(!expr)
-    {
-      std::cerr << msg << '\n';
-      std::exit(code);
-    }
-#endif
-  }
-
-  void glfw_assert(bool expr, std::string_view msg, int code)
-  {
-    if(!expr)
-    {
-      std::cerr << msg << '\n';
-      glfwTerminate();
-      std::exit(code);
-    }
-  }
-
-  void dglfw_assert(bool expr, std::string_view msg, int code)
-  {
-#if defined(DEBUG) | defined(_DEBUG)
-    if(!expr)
-    {
-      std::cerr << msg << '\n';
-      glfwTerminate();
-      std::exit(code);
-    }
-#endif
-  }
-
-}
 
 #if defined(__MINGW32__) | defined(__MINGW64__)
   char pause()
@@ -77,3 +35,4 @@ namespace test
     return std::cin.get();
   }
 #endif
+}

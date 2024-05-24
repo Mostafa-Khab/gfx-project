@@ -3,240 +3,245 @@
 #include "../system/vectors.hpp"
 #include "vertex.hpp"
 
-Vertex::Vertex(float _x, float _y,
-               float _r, float _g, float _b
-              )
-:x(_x), y(_y), r(_r), g(_g), b(_b)
+namespace gfx
 {
 
-}
+  vertex2d::vertex2d(float _x, float _y,
+                 float _r, float _g, float _b
+                )
+  :x(_x), y(_y), r(_r), g(_g), b(_b)
+  {
 
-Vertex::Vertex(float _x, float _y, RGB rgb)
-  :x(_x), y(_y), r(rgb.r), g(rgb.g), b(rgb.b)
-{
+  }
 
-}
+  vertex2d::vertex2d(float _x, float _y, rgb col)
+    :x(_x), y(_y), r(col.r), g(col.g), b(col.b)
+  {
 
-Vertex::Vertex(Vector2f v, RGB rgb)
-  :x(v.x), y(v.y), r(rgb.r), g(rgb.g), b(rgb.b)
-{
+  }
 
-}
+  vertex2d::vertex2d(vector2f v, rgb col)
+    :x(v.x), y(v.y), r(col.r), g(col.g), b(col.b)
+  {
 
-Vertex& Vertex::operator= (const Vertex& v)
-{
-  x = v.x;
-  y = v.y;
-  
-  r = v.r;
-  g = v.g;
-  b = v.b;
+  }
 
-  return (*this);
+  vertex2d& vertex2d::operator= (const vertex2d& v)
+  {
+    x = v.x;
+    y = v.y;
+    
+    r = v.r;
+    g = v.g;
+    b = v.b;
 
-}
+    return (*this);
 
-Vertex& Vertex::operator= (Vertex&& v)
-{
-  x = v.x;
-  y = v.y;
-  
-  r = v.r;
-  g = v.g;
-  b = v.b;
+  }
 
-  return (*this);
+  vertex2d& vertex2d::operator= (vertex2d&& v)
+  {
+    x = v.x;
+    y = v.y;
+    
+    r = v.r;
+    g = v.g;
+    b = v.b;
 
-}
+    return (*this);
 
-void Vertex::set_attributes()
-{
-  glEnableVertexAttribArray(Attributes::vpos_location());
-  glVertexAttribPointer(Attributes::vpos_location(), 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(0));
+  }
 
-  glEnableVertexAttribArray(Attributes::vcol_location());
-  glVertexAttribPointer(Attributes::vcol_location(), 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float) * 2));
-}
+  void vertex2d::set_attributes()
+  {
+    glEnableVertexAttribArray(attributes::vpos_location());
+    glVertexAttribPointer(attributes::vpos_location(), 2, GL_FLOAT, GL_FALSE, sizeof(vertex2d), (void*)(0));
 
-VertexEx::VertexEx(float _x, float _y, float _z,
-               float _r, float _g, float _b, float _a
-              )
-:x(_x), y(_y), z(_z), r(_r), g(_g), b(_b), a(_a)
-{
+    glEnableVertexAttribArray(attributes::vcol_location());
+    glVertexAttribPointer(attributes::vcol_location(), 3, GL_FLOAT, GL_FALSE, sizeof(vertex2d), (void*)(sizeof(float) * 2));
+  }
 
-}
+  vertex3d::vertex3d(float _x, float _y, float _z,
+                 float _r, float _g, float _b, float _a
+                )
+  :x(_x), y(_y), z(_z), r(_r), g(_g), b(_b), a(_a)
+  {
 
-VertexEx::VertexEx(float _x, float _y, float _z, RGBA rgba)
-  :x(_x), y(_y), z(_z), r(rgba.r), g(rgba.g), b(rgba.b), a(rgba.a)
-{
+  }
 
-}
+  vertex3d::vertex3d(float _x, float _y, float _z, rgba col)
+    :x(_x), y(_y), z(_z), r(col.r), g(col.g), b(col.b), a(col.a)
+  {
 
-VertexEx::VertexEx(Vector3f v, RGBA rgba)
-  :x(v.x), y(v.y), z(v.z), r(rgba.r), g(rgba.g), b(rgba.b), a(rgba.a)
-{
+  }
 
-}
+  vertex3d::vertex3d(vector3f v, rgba col)
+    :x(v.x), y(v.y), z(v.z), r(col.r), g(col.g), b(col.b), a(col.a)
+  {
 
-VertexEx& VertexEx::operator= (const VertexEx& v)
-{
-  x = v.x;
-  y = v.y;
-  z = v.z;
-  
-  r = v.r;
-  g = v.g;
-  b = v.b;
-  a = v.a;
+  }
 
-  return (*this);
+  vertex3d& vertex3d::operator= (const vertex3d& v)
+  {
+    x = v.x;
+    y = v.y;
+    z = v.z;
+    
+    r = v.r;
+    g = v.g;
+    b = v.b;
+    a = v.a;
 
-}
+    return (*this);
 
-VertexEx& VertexEx::operator= (VertexEx&& v)
-{
-  x = v.x;
-  y = v.y;
-  z = v.z;
-  
-  r = v.r;
-  g = v.g;
-  b = v.b;
-  a = v.a;
+  }
 
-  return (*this);
+  vertex3d& vertex3d::operator= (vertex3d&& v)
+  {
+    x = v.x;
+    y = v.y;
+    z = v.z;
+    
+    r = v.r;
+    g = v.g;
+    b = v.b;
+    a = v.a;
 
-}
+    return (*this);
 
-void VertexEx::set_attributes()
-{
-  glEnableVertexAttribArray(Attributes::vpos_location());
-  glVertexAttribPointer(Attributes::vpos_location(), 3, GL_FLOAT, GL_FALSE, sizeof(VertexEx), (void*)(0));
+  }
 
-  glEnableVertexAttribArray(Attributes::vcol_location());
-  glVertexAttribPointer(Attributes::vcol_location(), 4, GL_FLOAT, GL_FALSE, sizeof(VertexEx), (void*)(sizeof(float) * 3));
-}
+  void vertex3d::set_attributes()
+  {
+    glEnableVertexAttribArray(attributes::vpos_location());
+    glVertexAttribPointer(attributes::vpos_location(), 3, GL_FLOAT, GL_FALSE, sizeof(vertex3d), (void*)(0));
 
-texVertex::texVertex(float _x, float _y, float _z,
-               float _r, float _g, float _b, float _a,
-               float _u, float _v
-              )
-:x(_x), y(_y), z(_z), r(_r), g(_g), b(_b), a(_a), u(_u), v(_v)
-{
+    glEnableVertexAttribArray(attributes::vcol_location());
+    glVertexAttribPointer(attributes::vcol_location(), 4, GL_FLOAT, GL_FALSE, sizeof(vertex3d), (void*)(sizeof(float) * 3));
+  }
 
-}
+  vertex3dtex::vertex3dtex(float _x, float _y, float _z,
+                 float _r, float _g, float _b, float _a,
+                 float _u, float _v
+                )
+  :x(_x), y(_y), z(_z), r(_r), g(_g), b(_b), a(_a), u(_u), v(_v)
+  {
 
-texVertex::texVertex(float _x, float _y, float _z, RGBA rgba, Vector2f uv)
-  :x(_x), y(_y), z(_z), r(rgba.r), g(rgba.g), b(rgba.b), a(rgba.a), u(uv.x), v(uv.y)
-{
+  }
 
-}
+  vertex3dtex::vertex3dtex(float _x, float _y, float _z, rgba col, vector2f uv)
+    :x(_x), y(_y), z(_z), r(col.r), g(col.g), b(col.b), a(col.a), u(uv.x), v(uv.y)
+  {
 
-texVertex::texVertex(Vector3f v, RGBA rgba, Vector2f uv)
-  :x(v.x), y(v.y), z(v.z), r(rgba.r), g(rgba.g), b(rgba.b), a(rgba.a), u(uv.x), v(uv.y)
-{
+  }
 
-}
+  vertex3dtex::vertex3dtex(vector3f v, rgba col, vector2f uv)
+    :x(v.x), y(v.y), z(v.z), r(col.r), g(col.g), b(col.b), a(col.a), u(uv.x), v(uv.y)
+  {
 
-texVertex& texVertex::operator= (const texVertex& vert)
-{
-  x = vert.x;
-  y = vert.y;
-  z = vert.z;
-  
-  r = vert.r;
-  g = vert.g;
-  b = vert.b;
-  a = vert.a;
+  }
 
-  u = vert.u;
-  v = vert.v;
+  vertex3dtex& vertex3dtex::operator= (const vertex3dtex& vert)
+  {
+    x = vert.x;
+    y = vert.y;
+    z = vert.z;
+    
+    r = vert.r;
+    g = vert.g;
+    b = vert.b;
+    a = vert.a;
 
-  return (*this);
+    u = vert.u;
+    v = vert.v;
 
-}
+    return (*this);
+
+  }
 
 
-texVertex& texVertex::operator= (texVertex&& vert)
-{
-  x = vert.x;
-  y = vert.y;
-  z = vert.z;
-  
-  r = vert.r;
-  g = vert.g;
-  b = vert.b;
-  a = vert.a;
+  vertex3dtex& vertex3dtex::operator= (vertex3dtex&& vert)
+  {
+    x = vert.x;
+    y = vert.y;
+    z = vert.z;
+    
+    r = vert.r;
+    g = vert.g;
+    b = vert.b;
+    a = vert.a;
 
-  u = vert.u;
-  v = vert.v;
-  return (*this);
+    u = vert.u;
+    v = vert.v;
+    return (*this);
 
-}
+  }
 
-void texVertex::set_attributes()
-{
-  glEnableVertexAttribArray(Attributes::vpos_location());
-  glVertexAttribPointer(Attributes::vpos_location(), 3, GL_FLOAT, GL_FALSE, sizeof(texVertex), (void*)0);
+  void vertex3dtex::set_attributes()
+  {
+    glEnableVertexAttribArray(attributes::vpos_location());
+    glVertexAttribPointer(attributes::vpos_location(), 3, GL_FLOAT, GL_FALSE, sizeof(vertex3dtex), (void*)0);
 
-  glEnableVertexAttribArray(Attributes::vcol_location());
-  glVertexAttribPointer(Attributes::vcol_location(), 4, GL_FLOAT, GL_FALSE, sizeof(texVertex), (void*)(sizeof(float) * 3));
+    glEnableVertexAttribArray(attributes::vcol_location());
+    glVertexAttribPointer(attributes::vcol_location(), 4, GL_FLOAT, GL_FALSE, sizeof(vertex3dtex), (void*)(sizeof(float) * 3));
 
-  glEnableVertexAttribArray(Attributes::vtex_location());
-  glVertexAttribPointer(Attributes::vtex_location(), 2, GL_FLOAT, GL_FALSE, sizeof(texVertex), (void*)(sizeof(float) * 7));
-}
+    glEnableVertexAttribArray(attributes::vtex_location());
+    glVertexAttribPointer(attributes::vtex_location(), 2, GL_FLOAT, GL_FALSE, sizeof(vertex3dtex), (void*)(sizeof(float) * 7));
+  }
 
-texVertexNoRGB::texVertexNoRGB(float _x, float _y, float _z,
-               float _u, float _v
-              )
-:x(_x), y(_y), z(_z), u(_u), v(_v)
-{
+  vertex_tex::vertex_tex(float _x, float _y, float _z,
+                 float _u, float _v
+                )
+  :x(_x), y(_y), z(_z), u(_u), v(_v)
+  {
 
-}
+  }
 
-texVertexNoRGB::texVertexNoRGB(float _x, float _y, float _z,Vector2f uv)
-  :x(_x), y(_y), z(_z), u(uv.x), v(uv.y)
-{
+  vertex_tex::vertex_tex(float _x, float _y, float _z,vector2f uv)
+    :x(_x), y(_y), z(_z), u(uv.x), v(uv.y)
+  {
 
-}
+  }
 
-texVertexNoRGB::texVertexNoRGB(Vector3f v, Vector2f uv)
-  :x(v.x), y(v.y), z(v.z), u(uv.x), v(uv.y)
-{
+  vertex_tex::vertex_tex(vector3f v, vector2f uv)
+    :x(v.x), y(v.y), z(v.z), u(uv.x), v(uv.y)
+  {
 
-}
+  }
 
-texVertexNoRGB& texVertexNoRGB::operator= (const texVertexNoRGB& vert)
-{
-  x = vert.x;
-  y = vert.y;
-  z = vert.z;
-  
-  u = vert.u;
-  v = vert.v;
+  vertex_tex& vertex_tex::operator= (const vertex_tex& vert)
+  {
+    x = vert.x;
+    y = vert.y;
+    z = vert.z;
+    
+    u = vert.u;
+    v = vert.v;
 
-  return (*this);
+    return (*this);
 
-}
+  }
 
-texVertexNoRGB& texVertexNoRGB::operator= (texVertexNoRGB&& vert)
-{
-  x = vert.x;
-  y = vert.y;
-  z = vert.z;
-  
-  u = vert.u;
-  v = vert.v;
-  return (*this);
+  vertex_tex& vertex_tex::operator= (vertex_tex&& vert)
+  {
+    x = vert.x;
+    y = vert.y;
+    z = vert.z;
+    
+    u = vert.u;
+    v = vert.v;
+    return (*this);
 
-}
+  }
 
-void texVertexNoRGB::set_attributes()
-{
-  
-  glEnableVertexAttribArray(Attributes::vpos_location());
-  glVertexAttribPointer(Attributes::vpos_location(), 3, GL_FLOAT, GL_FALSE, sizeof(texVertexNoRGB), (void*)0);
+  void vertex_tex::set_attributes()
+  {
+    
+    glEnableVertexAttribArray(attributes::vpos_location());
+    glVertexAttribPointer(attributes::vpos_location(), 3, GL_FLOAT, GL_FALSE, sizeof(vertex_tex), (void*)0);
 
-  glEnableVertexAttribArray(Attributes::vtex_location());
-  glVertexAttribPointer(Attributes::vtex_location(), 2, GL_FLOAT, GL_FALSE, sizeof(texVertexNoRGB), (void*)(sizeof(float) * 3));
+    glEnableVertexAttribArray(attributes::vtex_location());
+    glVertexAttribPointer(attributes::vtex_location(), 2, GL_FLOAT, GL_FALSE, sizeof(vertex_tex), (void*)(sizeof(float) * 3));
+  }
+
 }

@@ -7,48 +7,51 @@
 #ifndef VECTORS_HPP
 #define VECTORS_HPP
 
-template <typename T>
-struct Vector2
+namespace gfx
 {
-  public:
-    explicit Vector2(T x, T y);
-    Vector2(const Vector2<T>& another) = default;
-    Vector2(Vector2<T>&& another) = default;
-    ~Vector2() = default;
 
-    Vector2<T>& operator= (const Vector2<T>& another) = default;
-    Vector2<T>  operator+ (const Vector2<T>& another);
-    Vector2<T>  operator- (const Vector2<T>& another);
+  template <typename T>
+  struct vector2
+  {
+    public:
+      explicit vector2(T x, T y);
+      vector2(const vector2<T>& another) = default;
+      vector2(vector2<T>&& another) = default;
+      ~vector2() = default;
 
-    float  distance  (const Vector2<T>& another);
+      vector2<T>& operator= (const vector2<T>& another) = default;
+      vector2<T>  operator+ (const vector2<T>& another);
+      vector2<T>  operator- (const vector2<T>& another);
+
+      float  distance  (const vector2<T>& another);
+
+    public:
+      T x, y;
+  };
+  typedef vector2<float> vector2f;
+  typedef vector2<int> vector2i;
+
+  template <typename T>
+  struct vector3
+  {
+    public:
+      explicit vector3(T x, T y, T z);
+      vector3(const vector3<T>& another) = default;
+      vector3(vector3<T>&& another) = default;
+      ~vector3() = default;
+
+      vector3<T>& operator= (const vector3<T>& another) = default;
+      vector3<T>  operator+ (const vector3<T>& another);
+      vector3<T>  operator- (const vector3<T>& another);
+
+      float  distance  (const vector3<T>& another);
 
 
-  public:
-    T x, y;
-};
-typedef Vector2<float> Vector2f;
-typedef Vector2<int> Vector2i;
+    public:
+      T x, y, z;
+  };
+  typedef vector3<float> vector3f;
+  typedef vector3<int> vector3i;
 
-template <typename T>
-struct Vector3
-{
-  public:
-    explicit Vector3(T x, T y, T z);
-    Vector3(const Vector3<T>& another) = default;
-    Vector3(Vector3<T>&& another) = default;
-    ~Vector3() = default;
-
-    Vector3<T>& operator= (const Vector3<T>& another) = default;
-    Vector3<T>  operator+ (const Vector3<T>& another);
-    Vector3<T>  operator- (const Vector3<T>& another);
-
-    float  distance  (const Vector3<T>& another);
-
-
-  public:
-    T x, y, z;
-};
-typedef Vector3<float> Vector3f;
-typedef Vector3<int> Vector3i;
-
+}
 #endif

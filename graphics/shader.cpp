@@ -6,63 +6,67 @@
 #include <debug.hpp>
 #include "shader.hpp"
 
-Shader::Shader(Shader::Type type): m_type(type), m_deleted(false)
+namespace gfx
 {
 
-}
-
-Shader::~Shader()
-{
-  remove();
-}
-
-bool Shader::load(std::string path)
-{
-  std::ifstream     file(path);
-  std::string       line;
-  std::stringstream ss;
-
-  if(!file.is_open()) 
+  shader::shader(shader::Type type): m_type(type), m_deleted(false)
   {
-     Log::debug("failed to open shader file");
-     return false;
+
   }
 
-  while(std::getline(file, line))
+  shader::~shader()
   {
-    ss << line << '\n';
+    remove();
   }
 
-  m_source = ss.str();
-  return true;
-
-}
-
-void Shader::remove()
-{
-  if(!m_deleted)
+  bool shader::load(std::string path)
   {
-    m_deleted = true;
-    glDeleteShader(m_id);
-    Log::debug("marking shader for deletion");
-  }
-}
+    std::ifstream     file(path);
+    std::string       line;
+    std::stringstream ss;
 
-void Shader::create()
-{
-  if(m_type == Type::VERTEX)
+    if(!file.is_open()) 
+    {
+       Log::debug("failed to open shader file");
+       return false;
+    }
+
+    while(std::getline(file, line))
+    {
+      ss << line << '\n';
+    }
+
+    m_source = ss.str();
+    return true;
+
+  }
+
+  void shader::remove()
   {
-    m_id = glCreateShader(GL_VERTEX_SHADER);
-  } else {
-    m_id = glCreateShader(GL_FRAGMENT_SHADER);
+    if(!m_deleted)
+    {
+      m_deleted = true;
+      glDeleteShader(m_id);
+      Log::debug("marking shader for deletion");
+    }
   }
-  const char* src = &(m_source[0]);
 
-  glShaderSource(m_id, 1 ,&src, NULL);
-  glCompileShader(m_id);
-}
+  void shader::create()
+  {
+    if(m_type == Type::VERTEX)
+    {
+      m_id = glCreateShader(GL_VERTEX_SHADER);
+    } else {
+      m_id = glCreateShader(GL_FRAGMENT_SHADER);
+    }
+    const char* src = &(m_source[0]);
 
-const unsigned int& Shader::getID()
-{
-  return m_id;
+    glShaderSource(m_id, 1 ,&src, NULL);
+    glCompileShader(m_id);
+  }
+
+  const unsigned int& shader::getID()
+  {
+    return m_id;
+  }
 }

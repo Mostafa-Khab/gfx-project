@@ -1,22 +1,17 @@
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.15..3.28)
 project(GFX_PROJ
         VERSION 1.0
         LANGUAGES CXX C
       )
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
-set(DEPS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/deps")
+set(DEPS_PATH deps/)
 
 if(UNIX)
   find_package(glfw3 3.3 REQUIRED)
   find_package(OpenGL REQUIRED)
   message(STATUS "compiling GFX for Unix")
 elseif(WIN32)
-  include_directories(/usr/lib/gcc/x86_64-w64-mingw32/12-win32/include/c++_)
-  include_directories(/usr/i686-w64-mingw32/include)
-  include_directories(/usr/i686-w64-mingw32/local/include)
-  link_directories(/usr/i686-w64-mingw32/lib)
-  link_directories(/usr/i686-w64-mingw32/local/lib)
 
   set(CMAKE_INSTALL_PREFIX /usr/i686-w64-mingw32/local/)
   message(STATUS "compiling GFX for WIN32")
@@ -46,15 +41,18 @@ if(UNIX)
       dl
       Xinerama
       Xcursor
+      logger
   )
 endif(UNIX)
 
 if(WIN32)
+  #if on windows compile logger to a lib which is found in deps folder
   target_link_libraries(main PUBLIC
     glx
     glfw3
     opengl32
     gdi32
+    #logger
   )
 
   target_compile_options(main PUBLIC -static-libgcc -static-libstdc++ -static)
