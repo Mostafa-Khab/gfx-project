@@ -17,10 +17,9 @@
  5. callbacks
 ### then go to graphics:-
  1. context
- 2. shader
+ 2. shaders
  3. program
  4. buffer
  5. polygon
  6. view
-### these topics consist of more than one file (hpp + cpp) with -std=c++17 at least (for compiling)
-### IF YOU SEE THIS LINE YOU CAN NOW UPDATE THIS SHIT(update)
+### these classes consist of more than one file (hpp + cpp) with -std=c++17 at least (for compiling)
