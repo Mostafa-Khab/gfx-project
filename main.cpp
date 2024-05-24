@@ -8,6 +8,8 @@ void handleInput(GLFWwindow* window, Buffer<Vertex>& vertex_buffer, float dt);
 
 int main()
 {
+  const int width = 800;
+  const int height = 600;
   Context context;
   context.setVersion({ 2 , 0 });
   context.setWindowData(800, 600, "my window");
@@ -48,14 +50,10 @@ int main()
   program.link();
 
   int mvp_location  = program.getUniformLocation("MVP");
-  int vpos_location = program.getAttribLocation("vPos");
-  int vcol_location = program.getAttribLocation("vCol");
+  Attributes::vpos_location() = program.getAttribLocation("vPos");
+  Attributes::vcol_location() = program.getAttribLocation("vCol");
 
-  glEnableVertexAttribArray(vpos_location);
-  glVertexAttribPointer(vpos_location, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(0));
-
-  glEnableVertexAttribArray(vcol_location);
-  glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float) * 2));
+  Vertex::set_attributes();
 
   GLFWwindow* window;
   context.getWindow(window);
@@ -68,29 +66,22 @@ int main()
   int   frq;
   float dt;
 
+  View view(width, height);
+
   while(!context.should_close())
   {
     dt = cf.restart();
 
-    float ratio;
-    int width, height;
-    mat4x4 mvp, m, p;
-
-    glfwGetFramebufferSize(window, &width, &height);
-    ratio = width / (float)height;
-
-    glViewport(0, 0, width, height);
-
-    mat4x4_identity(m);
-    mat4x4_ortho(p, -ratio, ratio, -1.f, 1.f, 1.f, -1.f);
-    mat4x4_mul(mvp, p, m);
+    view.update(window);
+    mat4x4_identity(view.m());
+    view.ortho();
+    view.multiply();
 
     handleInput(window, vertex_buffer, dt);
 
-
     program.use();
 
-    glUniformMatrix4fv(mvp_location, 1, GL_FALSE, (const float*) mvp);
+    view.set_mvp(mvp_location);
     context.clear(0.15f, 0.3f, 0.3f, 1.f);
     index_buffer.draw(GL_TRIANGLES);
     context.display();
@@ -114,7 +105,7 @@ void handleInput(GLFWwindow* window, Buffer<Vertex>& vertex, float dt)
 {
   bool updated = false;
   float speed = 2.5;
-  if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+  if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS && vertex[0].x < 1.f)
   {
     for(int i = 0; i < 4; ++i)
     {
@@ -123,7 +114,7 @@ void handleInput(GLFWwindow* window, Buffer<Vertex>& vertex, float dt)
       updated = true;
   }
 
-  if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+  if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS && vertex[1].x > -1.f)
   {
     for(int i = 0; i < 4; ++i)
     {
@@ -132,7 +123,7 @@ void handleInput(GLFWwindow* window, Buffer<Vertex>& vertex, float dt)
       updated = true;
   }
 
-  if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+  if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS && vertex[2].y < 1.f)
   {
     for(int i = 0; i < 4; ++i)
     {
@@ -141,7 +132,7 @@ void handleInput(GLFWwindow* window, Buffer<Vertex>& vertex, float dt)
       updated = true;
   }
 
-  if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+  if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS && vertex[0].y > -1.f)
   {
     for(int i = 0; i < 4; ++i)
     {
