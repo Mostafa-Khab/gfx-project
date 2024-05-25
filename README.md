@@ -16,4 +16,3 @@ you may want to use core profile. so add it in the gfx::context::init under glfw
 
 ![moving square](imgs/test.png)
 ![sample gif](imgs/smooth-square.gif)
-![sample video](imgs/smooth-gl-2024-05-25_14.29.55.mkv)
