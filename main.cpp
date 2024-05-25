@@ -50,12 +50,14 @@ int main()
   gfx::vector3f centre(-0.9f , -0.9f, -1.f);
   float size = 0.2f;
 
+  auto color = gfx::hex(0xcc241dff);
+
   gfx::vertex3d_buf vertex_buffer;
   vertex_buffer.bind();
-  vertex_buffer.append(gfx::vertex3d(centre.x + size, centre.y - size, centre.z, 1.0, 0.4, 0.2, 0.6));
-  vertex_buffer.append(gfx::vertex3d(centre.x - size, centre.y - size, centre.z, 1.0, 0.4, 0.2, 0.6));
-  vertex_buffer.append(gfx::vertex3d(centre.x + size, centre.y + size, centre.z, 0.6, 0.4, 0.2, 0.6));
-  vertex_buffer.append(gfx::vertex3d(centre.x - size, centre.y + size, centre.z, 0.6, 0.4, 0.2, 0.6));
+  vertex_buffer.append(gfx::vertex3d(centre.x + size, centre.y - size, centre.z, color));
+  vertex_buffer.append(gfx::vertex3d(centre.x - size, centre.y - size, centre.z, color));
+  vertex_buffer.append(gfx::vertex3d(centre.x + size, centre.y + size, centre.z, color));
+  vertex_buffer.append(gfx::vertex3d(centre.x - size, centre.y + size, centre.z, color));
   
   vertex_buffer.load_data(GL_STATIC_DRAW);
   
@@ -133,7 +135,7 @@ int main()
     prg.use();
     vw.set_mvp(mvp_location);
 
-    context.clear(gfx::rgba(0.f,0.f,0.f,0.5), GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    context.clear(gfx::hex(0xebdbb2ff), GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     vertex_buffer.draw(GL_TRIANGLE_STRIP);
     context.display();
     
