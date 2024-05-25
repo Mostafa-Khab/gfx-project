@@ -26,5 +26,7 @@ namespace gfx{
     float r, g, b, a;
   };
 
+  rgba hex(unsigned int color);
+
 }
 #endif
