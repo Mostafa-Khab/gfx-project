@@ -15,3 +15,4 @@ you are free to use what version but remember to use up to date shaders as well.
 you may want to use core profile. so add it in the gfx::context::init under glfw version window hint
 
 ![moving square](imgs/test.png)
+![sample gif](imgs/smooth-square.gif)
