@@ -16,6 +16,9 @@ namespace gfx
   struct vertex3d;
   struct vertex3dtex;
 
+  struct box;
+  template <typename T> struct vector2;
+
   template <typename T>
   class buffer
   {
@@ -25,8 +28,11 @@ namespace gfx
       buffer();
       virtual ~buffer();
 
-      void append(T& );
+      buffer(const buffer& buff);
+
+      void append(const T& );
       void append(T&&);
+
       void resize(std::size_t size);
       void reserve(std::size_t size);
       void remove();
@@ -39,9 +45,10 @@ namespace gfx
 
       virtual void draw(GLenum primative = GL_TRIANGLES);
 
-      std::size_t size();
+      std::size_t size() const;
 
       T& operator[] (std::size_t index);
+      buffer& operator= (const buffer& buff);
 
     protected:
       unsigned int    m_id;
@@ -60,6 +67,20 @@ namespace gfx
     public:
       vbuffer(): buffer<T>() { }
       ~vbuffer() = default;
+
+      void append(box b, T v, bool strip);
+
+      template <typename U>
+      void append(U data)
+      {
+        buffer<T>::append(data);
+      }
+
+      void move(vector2<float> v);
+
+      //if strip equals true, then only 4 vertcies are added.
+      void modify_box(box b, int start_index = 0, bool strip = true);
+
       void set_attributes();
       void draw(GLenum primative = GL_TRIANGLES) override;
   };
