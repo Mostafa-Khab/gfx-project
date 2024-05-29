@@ -40,7 +40,9 @@ namespace gfx
       void bind();
       void unbind();
       void load_data(GLenum usage = GL_STATIC_DRAW);  //based on the data provided in the vector of vertices.
-      void modify();  //modify based in m_data. update data in m_data then call this to update. GL_DYNAMIC_DRAW
+      
+      //if count = 0, num will be assigned to this->size();
+      void modify(int start_index = 0, int count = 0);  //modify based in m_data. update data in m_data then call this to update. GL_DYNAMIC_DRAW
 
 
       virtual void draw(GLenum primative = GL_TRIANGLES);
@@ -76,7 +78,8 @@ namespace gfx
         buffer<T>::append(data);
       }
 
-      void move(vector2<float> v);
+      //if end_index is zero it will be assigned to m_data.size();
+      void move(vector2<float> v, int start_index = 0 ,int end_index = 0);
 
       //if strip equals true, then only 4 vertcies are added.
       void modify_box(box b, int start_index = 0, bool strip = true);

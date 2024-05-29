@@ -90,16 +90,27 @@ namespace gfx
     }
   }
 
+  //still need modifications
   template <typename T>
-  void buffer<T>::modify()
+  void buffer<T>::modify(int si, int n)
   {
+    if(n <= 0)
+      n = m_data.size();
+
+    if(si < 0 || si + n > m_data.size())
+      Log::error("buffer<T>::modify is using starting index out of range [0~(m_data.size() - n)]");
+
     GLenum buff = (m_type == VERTEX)? GL_ARRAY_BUFFER : 
                                  GL_ELEMENT_ARRAY_BUFFER;
-    const T* pdata = &(m_data[0]);
+
+    const T* pdata = &(m_data[si]);
 
     this->bind();
-    glBufferSubData(buff, 0, (sizeof(T) * m_data.size()),
-                    pdata);
+
+    //here!
+    glBufferSubData(buff, 0 , (sizeof(T) * n), pdata);
+
+    //glBufferSubData(buff, 0, (sizeof(T) * m_data.size()), pdata);
   }
 
   template <typename T>
@@ -199,8 +210,16 @@ namespace gfx
   }
   
   template <typename T>
-  void vbuffer<T>::move(vector2f v)
+  void vbuffer<T>::move(vector2f v, int si, int ei)
   {
+    if(si < 0 || si >= this->size() || ei < 0 || ei >= this->size())
+    {
+      Log::error("vbuffer move start index or end index must be in range [0-vbuffer.size()]");
+      Log::error("vbuffer<T>::move() failed");
+      return;
+    }
+    if(ei == 0)
+      ei = this->size();
     for(int i = 0; i < this->size(); ++i)
     {
       (*this)[i].x += v.x;
@@ -215,38 +234,40 @@ namespace gfx
     if(strip)
     {
       (*this)[i].x     = b.x - (b.width / 2);
-      (*this)[i].y     = b.y - (b.width / 2);
+      (*this)[i].y     = b.y - (b.height / 2);
 
       (*this)[i + 1].x = b.x + (b.width / 2);
-      (*this)[i + 1].y = b.y - (b.width / 2);
+      (*this)[i + 1].y = b.y - (b.height / 2);
 
       (*this)[i + 2].x = b.x - (b.width / 2);
-      (*this)[i + 2].y = b.y + (b.width / 2);
+      (*this)[i + 2].y = b.y + (b.height / 2);
 
       (*this)[i + 3].x = b.x + (b.width / 2);
-      (*this)[i + 3].y = b.y + (b.width / 2);
-    } else 
-    {
-      (*this)[i].x     = b.x - (b.width / 2);
-      (*this)[i].y     = b.y - (b.width / 2);
+      (*this)[i + 3].y = b.y + (b.height / 2);
 
-      (*this)[i + 1].x = b.x + (b.width / 2);
-      (*this)[i + 1].y = b.y - (b.width / 2);
-
-      (*this)[i + 2].x = b.x - (b.width / 2);
-      (*this)[i + 2].y = b.y + (b.width / 2);
-
-      (*this)[i + 3].x = b.x + (b.width / 2);
-      (*this)[i + 3].y = b.y - (b.width / 2);
-
-      (*this)[i + 4].x = b.x - (b.width / 2);
-      (*this)[i + 4].y = b.y + (b.width / 2);
-
-      (*this)[i + 5].x = b.x + (b.width / 2);
-      (*this)[i + 5].y = b.y + (b.width / 2);
+      this->modify(i, 4);
+      return;
     }
 
-    this->modify();
+    (*this)[i].x     = b.x - (b.width / 2);
+    (*this)[i].y     = b.y - (b.height / 2);
+
+    (*this)[i + 1].x = b.x + (b.width / 2);
+    (*this)[i + 1].y = b.y - (b.height / 2);
+
+    (*this)[i + 2].x = b.x - (b.width / 2);
+    (*this)[i + 2].y = b.y + (b.height / 2);
+
+      (*this)[i + 3].x = (*this)[i + 1].x;
+      (*this)[i + 3].y = (*this)[i + 1].y;
+
+      (*this)[i + 4].x = (*this)[i + 2].x;
+      (*this)[i + 4].y = (*this)[i + 2].y;
+
+    (*this)[i + 5].x = b.x + (b.width / 2);
+    (*this)[i + 5].y = b.y + (b.height / 2);
+
+    this->modify(i, 6);
   }
 
   template <typename T>
