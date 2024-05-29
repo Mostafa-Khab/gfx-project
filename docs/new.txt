@@ -1,32 +1,56 @@
 # adding gfx namespace
 # most classes became lower case
 
-# system
-- Vector2           -> gfx::vector2
-- Vector3           -> gfx::vector3
-- Clock             -> gfx::clock
-- RGB               -> gfx::rgb
-- RGBA              -> gfx::rgba
-- callback::key     -> gfx::callback::key
-- callback::error   -> gfx::callback::error
+# system (old -> updated)
+  - Vector2           -> gfx::vector2
+  - Vector3           -> gfx::vector3
+  - Clock             -> gfx::clock
+  - RGB               -> gfx::rgb
+  - RGBA              -> gfx::rgba
+  - callback::key     -> gfx::callback::key
+  - callback::error   -> gfx::callback::error
 
 # system (new)
 * interpolators (hpp + cpp)
   - gfx::lerp
   - gfx::clamp
+  - gfx::cubic namespace for cubic ease functions
+    + ease_in
+    + ease_out
+    + ease_inout
+
+* box (hpp + cpp)
+
+* task (hpp + cpp)
+  - gfx::task<T>        (T is a position type ex: gfx::vector<float>)
+  - gfx::task_queue<T>  (T is a task - or even derived from task - queue (it uses std::vector btw))
+  - gfx::mid_task<T>    (T is a positon type and this class is derived from gfx::task)
+
+NOTE: mid_task have an extra middle interpolation vector between start and end for curve motion.
+
 
 <-------------------------------------------------->
 
 
-# graphics
-- Shader            -> gfx::shader
-- Program           -> gfx::program
-- Context           -> gfx::context
-- Buffer<T>         -> gfx::buffer<T>
-- vBuffer<T>        -> gfx::vbuffer<T>
-- Polygon<T>        -> gfx::polygon<T>
-- Vertex            -> gfx::vertex2d
-- VertexEx          -> gfx::vertex3d
-- texVertex         -> gfx::vertex3dtex
-- texVertexNoRGB    -> gfx::vertex_tex
-- View              -> gfx::view
+# graphics (old -> updated)
+  - Shader            -> gfx::shader
+  - Program           -> gfx::program
+  - Context           -> gfx::context
+
+  * buffer (hpp + cpp)
+    - Buffer<T>         -> gfx::buffer<T>
+    - vBuffer<T>        -> gfx::vbuffer<T>
+
+  - Polygon<T>        -> gfx::polygon<T>
+
+  * vertex (hpp + cpp)
+    - Vertex            -> gfx::vertex2d
+    - VertexEx          -> gfx::vertex3d
+    - texVertex         -> gfx::vertex3dtex
+    - texVertexNoRGB    -> gfx::vertex_tex
+
+  - View              -> gfx::view
+
+# graphics new features
+  - gfx::vbuffer<T> can accept a gfx::box
+  - gfx::vbuffer<T> now has member modify_box(box, start_index)
