@@ -1,0 +1,10 @@
+\subsection{gfx::rgba}
+    In GFX we represent colors in gfx::rgb, gfx::rgba.
+  the value of colors are in range [0, 1] not [0, 255]. \\
+  you may wonder if you can use something like hex,
+  fortunatly we provide gfx::hex function which accepts
+  a hex unsigned int and return rgba based on its value. \\
+  NOTE: you must provide complete hex to avoid weird colors
+  that can result if you didn't do so.
+  for example:
+    use 0xffffffff instead of 0xffffff

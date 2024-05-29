@@ -1,0 +1,5 @@
+\subsection{gfx::box}
+This is a very simple structure(class) that contains the centre of the box and dimentions (width and height).\\
+gfx::vbuffer can have rectangle data based on the data in the box, by using an overload of
+gfx::vbuffer::append(). This overload accepts box and a vertex of the same type that the class use -as this class can use different vertcies as it's a template- to provide the extra data that these vertex need. \\
+To simplify, box data only overwrites the x and y coordinates in the gfx::vbuffer

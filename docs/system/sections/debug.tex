@@ -1,0 +1,18 @@
+\subsection{debug}
+debug.hpp contains 2 macros: ASSERT and GLFW\_ASSERT \\
+both of them accepts a boolen value called x and an error message called y.\\
+if x is false, then:\\
+\begin{enumerate}
+  \item {ASSERT print the error message and exit with error code -1.} 
+  \item {GLFW\_ASSERT print error message and terminate GLFW through glfwTerminate() and exit with error code = -1}
+\end{enumerate}
+
+
+\paragraph{debug have namespace test that have 3 functions:}
+\begin{enumerate}{}
+  \item {pause() which pauses the program till pressing a key. NOTE: it doesn't notify you by any message, you need to output -for example "Press any key to continue.. " on your own.}
+  \item {print(std::string msg) to print a certain message as extra info.}
+  \item {dprint(std::string msg) which print msg if DEBUG or \_DEBUG is defined.}
+\end{enumerate}
+NOTE: both of them are rarely -or even never- used because of the more advanced logger system that is logger.hpp which is found in the deps folder. take a look. it supports console, file, dialogs(only for windows).
+

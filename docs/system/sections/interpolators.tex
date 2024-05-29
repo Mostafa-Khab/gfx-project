@@ -1,0 +1,33 @@
+\subsection{interpolators}
+\paragraph{functions are:}
+\begin{itemize}
+  \item{lerp(linear interpolation): which works with 1D , 2D, 3D coordinates.}
+  \item{clamp: ensure a value lies in a certian range. only 1D when writing this.}
+  \item{smoothstep function.}
+\end{itemize}
+
+\paragraph{gfx::lerp}
+  Our 1D version gfx::lerp accepts (start denoted by a, end denoted by, progress denoted by t, between [0, 1]) and is implemeted like that
+  $$lerp(a, b, t) = a + (b - a) * t$$
+  gfx::lerp in other dimentions does the same for each axis.
+
+\paragraph{gfx::clamp}
+  gfx::clamp accepts (value v, minimum, maximum) and return max if v greater then max, and min when v smaller than min.
+  and v if it lies in between min and max.
+
+\paragraph{gfx::smoothstep}
+  This is just an ease function that gives lerp smooth motion when applied to lerp t parameter.\\
+  let smoothstep function be st for short.
+  $$st(t) = 3t^{2} - 2t^{3}$$
+
+Our smoothstep function looks like this:-  \\\\\\\\\\\\
+  \begin{center}
+    \begin{tikzpicture}[transform canvas={scale=2.25}]
+      \draw (-0.5, 0) -- (-0.5, 1) node[above, scale=0.4 ]{$y$};
+      \draw (-0.5, 0) -- (0.5, 0)  node[above, scale=0.4 ]{$x$};
+      \draw (-0.5, 0) -- (-0.45, 0.00725) -- (-0.4, 0.028) -- (-0.35, 0.06075) -- (-0.3, 0.104) -- (-0.25, 0.15625) -- (-0.2, 0.216) -- (-0.15, 0.28175) -- (-0.1, 0.352) -- (-0.05, 0.42525) -- (5.96046e-08, 0.5) -- (0.0500001, 0.57475) -- (0.1, 0.648) -- (0.15, 0.71825) -- (0.2, 0.784) -- (0.25, 0.84375) -- (0.3, 0.896) -- (0.35, 0.93925) -- (0.4, 0.972) -- (0.45, 0.99275);
+    \end{tikzpicture}
+  \end{center}
+
+I think it looks nice. you may have noticed that this functions controls speed and by looking to the last figure
+you can notice that the speed ease in and ease out which results in a motion that looks like something is sliding.
