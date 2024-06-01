@@ -8,10 +8,13 @@
 
 namespace gfx{
 
+  struct rgba;
+
   struct rgb
   {
     public:
       rgb(float _r, float _g, float _b);
+      rgb(rgba color);
 
     public:
     float r, g, b;

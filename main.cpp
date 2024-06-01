@@ -36,8 +36,8 @@ int main(int argc, const char* argv[])
 
   gfx::program program;
   program.create(
-      "/home/sasa/shaders/shader3d.vert",
-      "/home/sasa/shaders/shader3d.frag"
+      "/home/sasa/shaders/default.vert",
+      "/home/sasa/shaders/default.frag"
       );
   program.link();
 
@@ -47,10 +47,10 @@ int main(int argc, const char* argv[])
 
 
   gfx::box box{-1.f, -1.f, 0.4, 0.4};
-  gfx::vbuffer<gfx::vertex3d> vbuff;
+  gfx::vbuffer<gfx::vertex2d> vbuff;
 
   vbuff.bind();
-    vbuff.append(box, gfx::vertex3d(0, 0, 1, gfx::hex(0xd65d0eff)), false);
+    vbuff.append(box, gfx::vertex2d(0, 0, gfx::gruv::red), false);
   vbuff.load_data();
 
   gfx::clock timer;
@@ -126,7 +126,6 @@ int main(int argc, const char* argv[])
       vbuff[i].r = color.r;
       vbuff[i].g = color.g;
       vbuff[i].b = color.b;
-      vbuff[i].a = color.a;
     }
 
     vbuff.modify_box(box, 0, false);
