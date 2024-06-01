@@ -84,9 +84,9 @@ int main(int argc, const char* argv[])
 
 
   gfx::task_queue<gfx::task_rgba>   color_tasks;
-  color_tasks.push(gfx::task_rgba(gfx::gruv::red, gfx::gruv::orange, 1.5, gfx::smoothstep));
-  color_tasks.push(gfx::task_rgba(gfx::gruv::orange, gfx::gruv::orange, 3.f, gfx::smoothstep));
-  color_tasks.push(gfx::task_rgba(gfx::gruv::orange, gfx::gruv::red, 1.5, gfx::smoothstep));
+  color_tasks.push(gfx::task_rgba(gfx::gruv::red, gfx::gruv::aqua, 1.5, gfx::smoothstep));
+  color_tasks.push(gfx::task_rgba(gfx::gruv::aqua, gfx::gruv::aqua, 3.f, gfx::smoothstep));
+  color_tasks.push(gfx::task_rgba(gfx::gruv::aqua, gfx::gruv::red, 1.5, gfx::smoothstep));
 
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_COLOR);
