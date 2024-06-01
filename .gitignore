@@ -1,3 +1,9 @@
 /build/*
 .cache/*
 .gitignore
+
+docs/graphics
+docs/system
+docs/new.txt
+docs/Makefile
+docs/main.tex
