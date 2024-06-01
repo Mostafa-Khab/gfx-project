@@ -21,10 +21,29 @@ namespace gfx{
   {
     public:
       rgba(float _r, float _g, float _b, float _a);
+      rgba(rgb c, float alpha = 1.f);
 
     public:
     float r, g, b, a;
   };
 
+  rgba hex(unsigned int color);
+
+  //adding a gruvbox color palette. (this is nice I think)
+
+  struct gruv 
+  {
+    static rgba red;
+    static rgba green;
+    static rgba yellow;
+    static rgba blue;
+    static rgba purple;
+    static rgba aqua;
+    static rgba orange;
+
+    static rgba white;
+    static rgba gray;
+    static rgba black;
+  };
 }
 #endif

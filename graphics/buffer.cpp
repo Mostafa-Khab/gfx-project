@@ -1,8 +1,11 @@
 #include <glad/gl.h>
+
 #include <typeinfo>
 
 #include <debug.hpp>
 
+#include "vectors.hpp"
+#include "box.hpp"
 #include "vertex.hpp"
 #include "buffer.hpp"
 
@@ -21,6 +24,13 @@ namespace gfx
     glGenBuffers(1, &m_id);
   }
 
+  template<typename T>
+  buffer<T>::buffer(const buffer<T>& buff)
+    :m_id(buff.m_id), m_type(buff.m_type), m_removed(buff.m_removed), m_data(buff.m_data)
+  {
+    
+  }
+
   template <typename T>
   buffer<T>::~buffer()
   {
@@ -28,7 +38,7 @@ namespace gfx
   }
 
   template <typename T>
-  void buffer<T>::append(T& data)
+  void buffer<T>::append(const T& data)
   {
     m_data.push_back(data);
   }
@@ -38,6 +48,7 @@ namespace gfx
   {
     m_data.push_back(data);
   }
+
 
   template <typename T>
   void buffer<T>::bind()
@@ -79,15 +90,27 @@ namespace gfx
     }
   }
 
+  //still need modifications
   template <typename T>
-  void buffer<T>::modify()
+  void buffer<T>::modify(int si, int n)
   {
+    if(n <= 0)
+      n = m_data.size();
+
+    if(si < 0 || si + n > m_data.size())
+      Log::error("buffer<T>::modify is using starting index out of range [0~(m_data.size() - n)]");
+
     GLenum buff = (m_type == VERTEX)? GL_ARRAY_BUFFER : 
                                  GL_ELEMENT_ARRAY_BUFFER;
-    const T* pdata = &(m_data[0]);
 
-    glBufferSubData(buff, 0, (sizeof(T) * m_data.size()),
-                    pdata);
+    const T* pdata = &(m_data[si]);
+
+    this->bind();
+
+    //here!
+    glBufferSubData(buff, 0 , (sizeof(T) * n), pdata);
+
+    //glBufferSubData(buff, 0, (sizeof(T) * m_data.size()), pdata);
   }
 
   template <typename T>
@@ -107,7 +130,7 @@ namespace gfx
   }
 
   template <typename T>
-  std::size_t buffer<T>::size()
+  std::size_t buffer<T>::size() const
   {
     return m_data.size();
   }
@@ -116,6 +139,16 @@ namespace gfx
   T& buffer<T>::operator[] (std::size_t index)
   {
     return m_data[index];
+  }
+
+  template <typename T>
+  buffer<T>& buffer<T>::operator= (const buffer<T>& buff)
+  {
+    m_id = buff.m_id;
+    m_type = buff.m_type;
+    m_removed = buff.m_removed;
+    m_data = buff.m_data;
+    return (*this);
   }
 
   template <typename T>
@@ -143,6 +176,99 @@ namespace gfx
     }
   }
 
+  //NOTE: a vbuffer can only have a vertex type and not unsigned int.
+  //since all vertcies must have coorinates. we use the vertex to provide the other data as colors.
+  template <typename T>
+  void vbuffer<T>::append(box b, T v, bool strip)
+  {
+    v.x = b.x - (0.5 * b.width);
+    v.y = b.y - (0.5 * b.height);
+    buffer<T>::append(v);
+
+    v.x = b.x + (0.5 * b.width);
+    v.y = b.y - (0.5 * b.height);
+    buffer<T>::append(v);
+
+    v.x = b.x - (0.5 * b.width);
+    v.y = b.y + (0.5 * b.height);
+    buffer<T>::append(v);
+
+    if(!strip)
+    {
+      v.x = b.x + (0.5 * b.width);
+      v.y = b.y - (0.5 * b.height);
+      buffer<T>::append(v);
+
+      v.x = b.x - (0.5 * b.width);
+      v.y = b.y + (0.5 * b.height);
+      buffer<T>::append(v);
+    }
+
+    v.x = b.x + (0.5 * b.width);
+    v.y = b.y + (0.5 * b.height);
+    buffer<T>::append(v);
+  }
+  
+  template <typename T>
+  void vbuffer<T>::move(vector2f v, int si, int ei)
+  {
+    if(si < 0 || si >= this->size() || ei < 0 || ei >= this->size())
+    {
+      Log::error("vbuffer move start index or end index must be in range [0-vbuffer.size()]");
+      Log::error("vbuffer<T>::move() failed");
+      return;
+    }
+    if(ei == 0)
+      ei = this->size();
+    for(int i = 0; i < this->size(); ++i)
+    {
+      (*this)[i].x += v.x;
+      (*this)[i].y += v.y;
+    }
+  }
+
+  template <typename T>
+  void vbuffer<T>::modify_box(box b, int i, bool strip)
+  {
+
+    if(strip)
+    {
+      (*this)[i].x     = b.x - (b.width / 2);
+      (*this)[i].y     = b.y - (b.height / 2);
+
+      (*this)[i + 1].x = b.x + (b.width / 2);
+      (*this)[i + 1].y = b.y - (b.height / 2);
+
+      (*this)[i + 2].x = b.x - (b.width / 2);
+      (*this)[i + 2].y = b.y + (b.height / 2);
+
+      (*this)[i + 3].x = b.x + (b.width / 2);
+      (*this)[i + 3].y = b.y + (b.height / 2);
+
+      this->modify(i, 4);
+      return;
+    }
+
+    (*this)[i].x     = b.x - (b.width / 2);
+    (*this)[i].y     = b.y - (b.height / 2);
+
+    (*this)[i + 1].x = b.x + (b.width / 2);
+    (*this)[i + 1].y = b.y - (b.height / 2);
+
+    (*this)[i + 2].x = b.x - (b.width / 2);
+    (*this)[i + 2].y = b.y + (b.height / 2);
+
+      (*this)[i + 3].x = (*this)[i + 1].x;
+      (*this)[i + 3].y = (*this)[i + 1].y;
+
+      (*this)[i + 4].x = (*this)[i + 2].x;
+      (*this)[i + 4].y = (*this)[i + 2].y;
+
+    (*this)[i + 5].x = b.x + (b.width / 2);
+    (*this)[i + 5].y = b.y + (b.height / 2);
+
+    this->modify(i, 6);
+  }
 
   template <typename T>
   void vbuffer<T>::set_attributes()

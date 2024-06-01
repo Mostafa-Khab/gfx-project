@@ -24,14 +24,14 @@ link_directories(graphics system ${DEPS_PATH})
 file(GLOB SOURCES graphics/*.cpp  system/*.cpp)
 
 
-add_library(glx STATIC ${SOURCES})
-target_link_libraries(glx PUBLIC logger)
+add_library(gfx STATIC ${SOURCES})
+target_link_libraries(gfx PUBLIC logger)
 
 add_executable(main ${DEPS_PATH}/glad_gl.c main.cpp)
 
 if(UNIX)
   target_link_libraries(main
-      glx            #before every other library when compiling source;
+      gfx            #before every other library when compiling source;
       glfw
       OpenGL::GL
       Xrandr
@@ -48,7 +48,7 @@ endif(UNIX)
 if(WIN32)
   #if on windows compile logger to a lib which is found in deps folder
   target_link_libraries(main PUBLIC
-    glx
+    gfx
     glfw3
     opengl32
     gdi32
@@ -59,7 +59,7 @@ if(WIN32)
 endif(WIN32)
 
 install(
-  TARGETS glx DESTINATION lib
+  TARGETS gfx DESTINATION lib
 )
 
 install(
