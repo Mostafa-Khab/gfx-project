@@ -10,6 +10,8 @@
 
 namespace gfx
 {
+  struct rgb;
+  struct rgba;
 
   float lerp(float a , float b , float t);
 
@@ -18,6 +20,12 @@ namespace gfx
 
   vector3f lerp(const vector3f& start, const vector3f& finish, float t);
   vector3f lerp(vector3f&& start, vector3f&& finish, float t);
+
+  rgb lerp(const rgb& start, const rgb& end, float t);
+  rgb lerp(rgb&& start, rgb&& end, float t);
+
+  rgba lerp(const rgba& start, const rgba& end, float t);
+  rgba lerp(rgba&& start, rgba&& end, float t);
 
   float clamp(float v, float min, float max);
 

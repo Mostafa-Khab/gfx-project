@@ -1,4 +1,5 @@
 #include "vectors.hpp"
+#include "color.hpp"
 #include "interpolators.hpp"
 #include "task.hpp"
 
@@ -123,12 +124,27 @@ namespace gfx
   template class task<vector2<float>>;
   template class task<vector3<float>>;
 
+  template class task<rgb>;
+  template class task<rgba>;
+
+
   template class task_queue<task<vector2<float>>>;
   template class task_queue<task<vector3<float>>>;
+
+  template class task_queue<task<rgb>>;
+  template class task_queue<task<rgba>>;
+
+
 
   template class mid_task<vector2<float>>;
   template class mid_task<vector3<float>>;
 
+  template class mid_task<rgb>;
+  template class mid_task<rgba>;
+
   template class task_queue<mid_task<vector2<float>>>;
   template class task_queue<mid_task<vector3<float>>>;
+
+  template class task_queue<mid_task<rgb>>;
+  template class task_queue<mid_task<rgba>>;
 }

@@ -1,3 +1,4 @@
+#include "color.hpp"
 #include "interpolators.hpp"
 
 namespace gfx
@@ -24,6 +25,26 @@ namespace gfx
   vector3f lerp(vector3f&& start, vector3f&& finish, float t)
   {
     return vector3(lerp(start.x, finish.x, t), lerp(start.y, finish.y, t), lerp(start.z, finish.z, t));
+  }
+
+  rgb lerp(const rgb& c1, const rgb& c2, float t)
+  {
+    return rgb(lerp(c1.r, c2.r, t), lerp(c1.g, c2.g, t), lerp(c1.b, c2.b, t));
+  }
+
+  rgb lerp(rgb&& c1, rgb&& c2, float t)
+  {
+    return rgb(lerp(c1.r, c2.r, t), lerp(c1.g, c2.g, t), lerp(c1.b, c2.b, t));
+  }
+
+  rgba lerp(const rgba& c1, const rgba& c2, float t)
+  {
+    return rgba(lerp(c1.r, c2.r, t), lerp(c1.g, c2.g, t), lerp(c1.b, c2.b, t), lerp(c1.a, c2.a, t));
+  }
+
+  rgba lerp(rgba&& c1, rgba&& c2, float t)
+  {
+    return rgba(lerp(c1.r, c2.r, t), lerp(c1.g, c2.g, t), lerp(c1.b, c2.b, t), lerp(c1.a, c2.a, t));
   }
 
   float clamp(float v, float min, float max)

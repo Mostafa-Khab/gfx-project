@@ -17,6 +17,9 @@ namespace gfx
   template <typename T>
   struct vector3;
 
+  struct rgb;
+  struct rgba;
+
   float smoothstep(float t);
 
   //animation task
@@ -55,6 +58,9 @@ namespace gfx
   typedef task<vector2<float>> task2d;
   typedef task<vector3<float>> task3d;
 
+  typedef task<rgb> task_rgb;
+  typedef task<rgba> task_rgba;
+
   //a wrapper to std::vector that stores some animation tasks and play them in squence.
   template <typename T>
   class task_queue
@@ -80,6 +86,9 @@ namespace gfx
 
   typedef task_queue<task<vector2<float>>> task2d_queue;
   typedef task_queue<task<vector3<float>>> task3d_queue;
+  
+  typedef task_queue<task<rgb>>  task_rgb_queue;
+  typedef task_queue<task<rgba>> task_rgba_queue;
 
   //a task class that have extra mid point to be lerped in operator() or play in queue
   template <typename T>
@@ -114,8 +123,14 @@ namespace gfx
   typedef mid_task<vector2<float>> mid_task2d;
   typedef mid_task<vector3<float>> mid_task3d;
 
+  typedef mid_task<rgb>  mid_task_rgb;
+  typedef mid_task<rgba> mid_task_rgba;
+
   typedef task_queue<mid_task<vector2<float>>> mid_task2d_queue;
   typedef task_queue<mid_task<vector3<float>>> mid_task3d_queue;
+
+  typedef task_queue<mid_task<rgb>>  mid_task_rgb_queue;
+  typedef task_queue<mid_task<rgba>> mid_task_rgba_queue;
 }
 
 
