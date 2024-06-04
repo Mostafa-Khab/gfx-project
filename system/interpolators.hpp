@@ -32,10 +32,34 @@ namespace gfx
   //ease functions
   float smoothstep(float t);
 
+  namespace quad
+  {
+    float ease_in(float x);
+    float ease_out(float x);
+    float ease_inout(float x);
+    float pump(float x);
+  }
+
   namespace cubic 
   {
     float ease_in(float x);
     float ease_out(float x);
+    float ease_inout(float x);
+    float pump(float x);
+  }
+
+  namespace quart
+  {
+    float ease_in(float x);
+    float ease_out(float x);
+    float ease_inout(float x);
+    float pump(float x);
+  }
+
+  namespace bounce
+  {
+    float ease_out(float x);
+    float ease_in(float x);
     float ease_inout(float x);
   }
 }

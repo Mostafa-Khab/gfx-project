@@ -64,9 +64,21 @@ namespace gfx
   }
 
   template<typename T>
+  T& task_queue<T>::operator[] (int index)
+  {
+    return m_tasks[index];
+  }
+
+  template<typename T>
   bool task_queue<T>::done()
   {
     return m_tasks.back().m_done;
+  }
+
+  template<typename T>
+  bool task_queue<T>::empty()
+  {
+    return m_tasks.empty();
   }
 
   template<typename T>

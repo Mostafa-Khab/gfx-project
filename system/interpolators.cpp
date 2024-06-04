@@ -58,6 +58,33 @@ namespace gfx
     return t * t * (3 - 2 * t);
   }
 
+  namespace quad
+  {
+    float ease_in(float x)
+    {
+      return x * x;
+    }
+
+    float ease_out(float x)
+    {
+      return 1.f - (1.f - x) * (1.f - x);
+    }
+
+    float ease_inout(float x)
+    {
+      return x < 0.5 ? 2 * x * x : 1 - (-2 * x + 2) * (-2 * x + 2) / 2;
+    }
+
+    float pump(float x)
+    {
+      if (x <= 0.8f)
+        return 1.5625f * x * x;
+
+      return 1.125f - 12.5f * (0.9 - x) * (0.9 - x);
+    }
+  }
+
+
   namespace cubic
   {
     float ease_in(float x)
@@ -72,10 +99,76 @@ namespace gfx
 
     float ease_inout(float x)
     {
-      if(x < 0.5)
-        return 4.f * x * x * x;
+      return (x < 0.5) ?  4.f * x * x * x : 1.f - (-2.f * x + 2.f) * (-2.f * x + 2.f) * (-2.f * x + 2.f) / 2.f;
+    }
 
-      return 1.f - (-2.f * x + 2.f) * (-2.f * x + 2.f) * (-2.f * x + 2.f) / 2.f;
+    float pump(float x)
+    {
+      if (x <= 0.8f)
+        return 1.953f * x * x * x;
+
+      return 1.1875 - 18.75 * (0.9 - x) * (0.9 - x);
+    }
+  }
+
+  namespace quart
+  {
+    float ease_in(float x)
+    {
+      return x * x * x * x;
+    }
+
+    float ease_out(float x)
+    {
+      return 1.f - (1.f - x) * (1.f - x) * (1.f - x) * (1.f - x);
+    }
+
+    float ease_inout(float x)
+    {
+      return x < 0.5 ? 8 * x * x * x * x : 1 - (-2 * x + 2) * (-2 * x + 2) * (-2 * x + 2) * (-2 * x + 2) / 2;
+    }
+
+    float pump(float x)
+    {
+      if (x <= 0.8f)
+        return 2.4414f * x * x * x * x;
+
+      return 1.25f - 25.f * (0.9 - x) * (0.9 - x);
+    }
+  }
+
+
+  namespace bounce
+  {
+    const float n1 = 7.5625;
+    const float d1 = 2.75;
+
+    float ease_out(float t)
+    {
+
+      if(t < 1.f / d1)
+      {
+        return n1 * t * t;
+      } else if(t < 2.f / d1)
+      {
+        return n1 * (t -= 1.5f / d1) * t +  0.75f;
+      } else if(t < 2.5f / d1)
+      {
+        return n1 * (t -= 2.25f / d1) * t + 0.9375f;
+      } 
+
+      return n1 * (t -= 2.625f / d1) * t + 0.984375f;
+    }
+
+    float ease_in(float x)
+    {
+      return 1 - ease_out(1 - x);
+    }
+
+    float ease_inout(float x)
+    {
+      return (x < 0.5)? (1 - ease_out(1 - 2 * x)) / 2
+                      : (1 + ease_out(2 * x - 1)) / 2;
     }
   }
 }

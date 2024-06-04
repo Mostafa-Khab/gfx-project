@@ -24,8 +24,11 @@ we added:
 you can now make cool animations with gfx and interpolators.
 interpolators now have:
 - gfx::cubic namespace with:
- + ease_in
- + ease_out
- + ease_inout
+   + ease_in
+   + ease_out
+   + ease_inout
+   + new: pump
+
+new: gfx::quad and gfx::quart are now available
 
 ![moving square](imgs/test.png)

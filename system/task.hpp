@@ -74,8 +74,11 @@ namespace gfx
 
       void restart();
       bool done();
+      bool empty();
 
       T& front();
+
+      T& operator[] (int index);
 
       typename T::position_type play(float dt);
 
