@@ -15,13 +15,6 @@ namespace gfx
   template <typename T> class vector2;
   template <typename T> class vector3;
 
-  class attributes
-  {
-    public:
-      static int& vpos_location() { static int val = 0; return val;}
-      static int& vcol_location() { static int val = 0; return val;}
-      static int& vtex_location() { static int val = 0; return val;}
-  };
 
   struct vertex2d
   {
@@ -40,7 +33,16 @@ namespace gfx
     vertex2d& operator= (vertex2d&&);
 
     static void set_attributes();
+
+    class attributes;
     
+  };
+
+  class vertex2d::attributes
+  {
+    public:
+      static int& vpos_location() { static int val = 0; return val;}
+      static int& vcol_location() { static int val = 0; return val;}
   };
 
   struct vertex3d
@@ -60,6 +62,15 @@ namespace gfx
     vertex3d& operator= (vertex3d&&);
     
     static void set_attributes();
+
+    class attributes;
+  };
+
+  class vertex3d::attributes
+  {
+    public:
+      static int& vpos_location() { static int val = 0; return val;}
+      static int& vcol_location() { static int val = 0; return val;}
   };
 
   struct vertex3dtex
@@ -79,6 +90,16 @@ namespace gfx
     vertex3dtex& operator= (vertex3dtex&&);
     
     static void set_attributes();
+
+    class attributes;
+  };
+
+  class vertex3dtex::attributes
+  {
+    public:
+      static int& vpos_location() { static int val = 0; return val;}
+      static int& vcol_location() { static int val = 0; return val;}
+      static int& vtex_location() { static int val = 0; return val;}
   };
 
 
@@ -99,6 +120,15 @@ namespace gfx
     vertex_tex& operator= (vertex_tex&&);
     
     static void set_attributes();
+
+    class attributes;
+  };
+
+  class vertex_tex::attributes
+  {
+    public:
+      static int& vpos_location() { static int val = 0; return val;}
+      static int& vtex_location() { static int val = 0; return val;}
   };
 
 }

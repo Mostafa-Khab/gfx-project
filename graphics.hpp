@@ -13,6 +13,7 @@
 #include "graphics/shader.hpp"
 #include "graphics/polygon.hpp"
 #include "graphics/view.hpp"
+#include "graphics/texture.hpp"
 
 
 #endif

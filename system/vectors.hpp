@@ -7,6 +7,11 @@
 #ifndef VECTORS_HPP
 #define VECTORS_HPP
 
+namespace std
+{
+  template <typename T> class function;
+}
+
 namespace gfx
 {
 
@@ -22,14 +27,16 @@ namespace gfx
       vector2<T>& operator= (const vector2<T>& another) = default;
       vector2<T>  operator+ (const vector2<T>& another);
       vector2<T>  operator- (const vector2<T>& another);
+      vector2<T>  operator* (T num);
 
       float  distance  (const vector2<T>& another);
 
     public:
       T x, y;
   };
-  typedef vector2<float> vector2f;
   typedef vector2<int> vector2i;
+  typedef vector2<float> vector2f;
+  typedef vector2<double> vector2d;
 
   template <typename T>
   struct vector3
@@ -43,6 +50,7 @@ namespace gfx
       vector3<T>& operator= (const vector3<T>& another) = default;
       vector3<T>  operator+ (const vector3<T>& another);
       vector3<T>  operator- (const vector3<T>& another);
+      vector3<T>  operator* (T num);
 
       float  distance  (const vector3<T>& another);
 
@@ -52,6 +60,9 @@ namespace gfx
   };
   typedef vector3<float> vector3f;
   typedef vector3<int> vector3i;
+  typedef vector3<double> vector3d;
+
+  float derivate(std::function<float(float)> f, float x, float h = 0.0001);
 
 }
 #endif

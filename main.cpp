@@ -1,18 +1,11 @@
 #include <glad/gl.h>
 #include <iostream>
+
 #include "graphics.hpp"
 #include "system.hpp"
 
 
-void handleInput(GLFWwindow* window, gfx::vbuffer<gfx::vertex3d>& vertex_buffer, float dt);
-
-void print(gfx::vbuffer<gfx::vertex3d>& vbuff)
-{
-  for(int i = 0; i < vbuff.size(); ++i)
-  {
-    std::cout << vbuff[i].x << ' ' << vbuff[i].y << '\n';
-  }
-}
+void handleInput(GLFWwindow* window, gfx::vbuffer<gfx::vertex3d>& vertex_buffer, float dt, std::function<float(float)> func);
 
 void lerp(gfx::vbuffer<gfx::vertex3d>& vbuff, const gfx::vector3f& centre, const gfx::vector3f& end, float size, float t)
 {
@@ -29,10 +22,8 @@ void lerp(gfx::vbuffer<gfx::vertex3d>& vbuff, const gfx::vector3f& centre, const
   vbuff[3].x = gfx::lerp(centre.x - size, end.x - size, t);
   vbuff[3].y = gfx::lerp(centre.y + size, end.y + size, t);
 
-  //print(vbuff);
   vbuff.modify();
 }
-
 
 int main()
 {
@@ -61,23 +52,13 @@ int main()
   
   vertex_buffer.load_data(GL_STATIC_DRAW);
   
-  gfx::shader vertex_shader(gfx::shader::VERTEX);
-  result = vertex_shader.load("../shaders/shader3d.vert");
-  GLFW_ASSERT(result, "failed to load vertex shader");
-  vertex_shader.create();
-
-  gfx::shader fragment_shader(gfx::shader::FRAGMENT);
-  result = fragment_shader.load("../shaders/shader3d.frag");
-  GLFW_ASSERT(result, "failed to load fragment shader");
-  fragment_shader.create();
-
   gfx::program prg;
-  prg.attachShaders(vertex_shader, fragment_shader);
+  prg.create("/home/sasa/shaders/shader3d.vert", "/home/sasa/shaders/shader3d.frag");
   prg.link();
 
   int mvp_location  = prg.getUniformLocation("MVP");
-  gfx::attributes::vpos_location() = prg.getAttribLocation("vPos");
-  gfx::attributes::vcol_location() = prg.getAttribLocation("vCol");
+  gfx::vertex3d::attributes::vpos_location() = prg.getAttribLocation("vPos");
+  gfx::vertex3d::attributes::vcol_location() = prg.getAttribLocation("vCol");
 
   GLFWwindow* window;
   context.getWindow(window);
@@ -108,7 +89,6 @@ int main()
   const gfx::vector3f mid1(-1.f , 2.f, -1.f);
   const gfx::vector3f mid2( 0.3 , 1.f, -1.f);
 
-  float somerandom = 0.1;
 
   while(!context.should_close())
   {
@@ -118,14 +98,12 @@ int main()
     vw.perspective();
     vw.multiply();
 
-    handleInput(window, vertex_buffer, gfx::smoothstep(dt * gfx::smoothstep(somerandom) * 3.8f));
-    if(somerandom < 1.f)
-      somerandom += 0.1f;
+    handleInput(window, vertex_buffer, dt, gfx::smoothstep);
 
     if (t < 1.f)
     {
 
-      float st = gfx::smoothstep(t);
+      float st = gfx::cubic::ease_inout(t);
       auto mid = gfx::lerp(mid1, mid2, st);
       lerp(vertex_buffer, gfx::lerp(centre, mid, st), gfx::lerp(mid, end, st), size, st);
     }
@@ -135,8 +113,8 @@ int main()
     prg.use();
     vw.set_mvp(mvp_location);
 
-    context.clear(gfx::hex(0xebdbb2ff), GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    vertex_buffer.draw(GL_TRIANGLE_STRIP);
+    //context.clear(gfx::hex(0xebdbb2ff), GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      vertex_buffer.draw(GL_TRIANGLE_STRIP);
     context.display();
     
     if(c.elapsed() > 1.f)
@@ -154,44 +132,49 @@ int main()
   return 0;
 }
 
-void handleInput(GLFWwindow* window, gfx::vbuffer<gfx::vertex3d>& vertex, float dt)
+void handleInput(GLFWwindow* window, gfx::vbuffer<gfx::vertex3d>& vertex, float dt, std::function<float(float)> ease)
 {
   bool updated = false;
   float speed = 2.5;
+  static float t = 0.f;
+  gfx::vector2f v(0.f, 0.f);
+
   if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
   {
-    for(int i = 0; i < 4; ++i)
-    {
-      vertex[i].x += speed * dt;      
-    }
-      updated = true;
+    v.x += speed;
+    updated = true;
   }
 
   if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
   {
-    for(int i = 0; i < 4; ++i)
-    {
-      vertex[i].x -= speed * dt;      
-    }
-      updated = true;
+    v.x -= speed;
+    updated = true;
   }
 
   if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
   {
-    for(int i = 0; i < 4; ++i)
-    {
-      vertex[i].y += speed * dt;      
-    }
-      updated = true;
+    v.y += speed;
+    updated = true;
   }
 
   if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
   {
-    for(int i = 0; i < 4; ++i)
-    {
-      vertex[i].y -= speed * dt;      
-    }
-      updated = true;
+    v.y -= speed;
+    updated = true;
   }
-  if(updated) { vertex.modify();}
+
+  if(updated) {
+    t += dt * 2;
+  } else 
+  {
+    t -= dt * 5;
+  }
+    vertex.move(gfx::vector2f(ease(t) * dt * v.x, ease(t) * dt * v.y));
+    vertex.modify();
+
+  if(t > 1.f)
+    t = 1.f;
+
+  if(t < 0.f)
+    t = 0.f;
 }

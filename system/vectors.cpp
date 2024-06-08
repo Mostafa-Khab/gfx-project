@@ -1,4 +1,5 @@
 #include <cmath>
+#include <functional>
 #include "vectors.hpp"
 
 namespace gfx{
@@ -19,6 +20,12 @@ namespace gfx{
   vector2<T> vector2<T>::operator- (const vector2<T>& another)
   {
     return vector2<T>(another.x - this->x, another.y - this->y);
+  }
+
+  template <typename T>
+  vector2<T> vector2<T>::operator* (T num)
+  {
+    return vector2<T>(x * num, y * num);
   }
 
   template <typename T>
@@ -45,6 +52,12 @@ namespace gfx{
   {
     return vector3<T>(another.x - this->x, another.y - this->y, another.z - this->z);
   }
+  
+  template <typename T>
+  vector3<T> vector3<T>::operator* (T num)
+  {
+    return vector3<T>(x * num, y * num, z * num);
+  }
 
   template <typename T>
   float vector3<T>::distance(const vector3<T>& another)
@@ -53,9 +66,17 @@ namespace gfx{
     return std::sqrt(temp.x * temp.x + temp.y * temp.y + temp.z * temp.z);
   }
 
+  float derivate(std::function<float(float)> f, float x, float h)
+  {
+
+    return (f(x + h) - f(x - h)) / (2.f * h);
+  }
+
+  template class vector2<double>;
   template class vector2<float>;
   template class vector2<int>;
 
+  template class vector3<double>;
   template class vector3<float>;
   template class vector3<int>;
 }
