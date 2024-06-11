@@ -209,6 +209,7 @@ namespace gfx
     buffer<T>::append(v);
   }
   
+  //I think you should run modify() after calling this function.
   template <typename T>
   void vbuffer<T>::move(vector2f v, int si, int ei)
   {
@@ -228,7 +229,7 @@ namespace gfx
   }
 
   template <typename T>
-  void vbuffer<T>::modify_box(box b, int i, bool strip)
+  void vbuffer<T>::update_box(box b, int i, bool strip)
   {
 
     if(strip)
@@ -245,7 +246,6 @@ namespace gfx
       (*this)[i + 3].x = b.x + (b.width / 2);
       (*this)[i + 3].y = b.y + (b.height / 2);
 
-      this->modify(i, 4);
       return;
     }
 
@@ -267,7 +267,18 @@ namespace gfx
     (*this)[i + 5].x = b.x + (b.width / 2);
     (*this)[i + 5].y = b.y + (b.height / 2);
 
-    this->modify(i, 6);
+  }
+
+  template <typename T>
+  void vbuffer<T>::modify_box(box b, int i, bool strip)
+  {
+    update_box(b, i, strip);
+
+    if(strip)
+      this->modify(i, 4);
+    else
+      this->modify(i, 6);
+
   }
 
   template <typename T>

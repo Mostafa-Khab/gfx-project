@@ -26,11 +26,12 @@ namespace gfx
     m_version.minor = v.minor;
   }
 
-  void context::setWindowData(int w, int h, std::string name)
+  void context::setWindowData(int w, int h, std::string name, bool full)
   {
     m_window_size_x = w;
     m_window_size_y = h;
     m_window_name   = name;
+    m_fullscreen    = full;
   }
 
   context::version context::getVersion()
@@ -48,9 +49,15 @@ namespace gfx
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, m_version.major);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, m_version.minor);
 
+
+    GLFWmonitor* monitor = nullptr;
+
+    if(m_fullscreen)
+      monitor = glfwGetPrimaryMonitor();
+
     m_window = glfwCreateWindow(m_window_size_x, m_window_size_y,
                                 m_window_name.c_str(),
-                                NULL, NULL);
+                                monitor, NULL);
     if(!m_window)
     {
       Log::debug("failed to create window in context::init()");

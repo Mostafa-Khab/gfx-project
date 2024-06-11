@@ -31,7 +31,7 @@ namespace gfx
      void setVersion   (version v);
      version getVersion();
 
-     void setWindowData(int w, int h, std::string name);
+     void setWindowData(int w, int h, std::string name, bool fullscreen = false);
 
      bool init();
 
@@ -54,6 +54,7 @@ namespace gfx
      std::string m_window_name;
 
      bool        m_terminated;
+     bool        m_fullscreen;
 
   };
 

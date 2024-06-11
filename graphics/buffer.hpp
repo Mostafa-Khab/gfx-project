@@ -82,6 +82,7 @@ namespace gfx
       void move(vector2<float> v, int start_index = 0 ,int end_index = 0);
 
       //if strip equals true, then only 4 vertcies are added.
+      void update_box(box b, int start_index = 0, bool strip = true);
       void modify_box(box b, int start_index = 0, bool strip = true);
 
       void set_attributes();
