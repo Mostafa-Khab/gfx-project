@@ -24,6 +24,8 @@ namespace gfx
       void use();
       void remove();
 
+      void reload(std::string vshader_file, std::string fshader_file);
+
       bool create(std::string vshader_file, std::string fshader_file);
 
       int getUniformLocation(const char* name_in_program);

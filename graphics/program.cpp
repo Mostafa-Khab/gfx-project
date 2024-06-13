@@ -45,6 +45,17 @@ void program::remove()
   }
 }
 
+void program::reload(std::string vshader_file, std::string fshader_file)
+{
+  remove();
+  m_id = glCreateProgram();
+  if(!m_id)
+    Log::error("failed to recreate program in  program::reload");
+
+  create(vshader_file, fshader_file);
+
+}
+
 int program::getUniformLocation(const char* name)
 {
   return glGetUniformLocation(m_id, name);

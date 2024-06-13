@@ -13,6 +13,9 @@ namespace gfx
   {
     public:
       texture(int target = GL_TEXTURE_2D, int format = GL_RGB);
+      texture(int w, int h, int c, unsigned char* d, int target = GL_TEXTURE_2D, int format = GL_RGB);
+      texture(const texture& t);
+      texture(texture&& t);
      ~texture();
 
       bool load(std::string path);
@@ -26,6 +29,12 @@ namespace gfx
 
       void dump(std::ostream& os);
 
+      //sometimes other things does free the pointer.
+      void set_auto_free(bool free_this_image);
+
+      texture& operator= (const texture& t);
+      texture& operator= (texture&& t);
+
     public:
       unsigned int id;
       int width, height, channels;
@@ -34,6 +43,7 @@ namespace gfx
     private:
       int target;
       bool freed, deleted;
+      bool auto_free;
   };
 }
 

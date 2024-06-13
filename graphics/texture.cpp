@@ -11,16 +11,47 @@
 
 namespace gfx
 {
-
   texture::texture(int t, int f)
-    :id(0), target(t), freed(false), deleted(false), format(f)
+    :id(0), target(t), freed(false), deleted(false), format(f), auto_free(true)
   {
     glGenTextures(1, &id);
   }
 
+  texture::texture(int w, int h, int c, unsigned char* d, int t, int f)
+    :width(w), height(h), channels(c), data(d), target(t), format(f), auto_free(false)
+  {
+    glGenTextures(1, &id);
+  }
+
+  texture::texture(const texture& t)
+    : id(t.id),
+      width(t.width), height(t.height),
+      channels (t.channels),
+      data (t.data),
+      auto_free(t.auto_free),
+      target(t.target),
+      freed( t.freed),
+      deleted( t.deleted)
+  {
+
+  }
+
+  texture::texture(texture&& t)
+    : id(t.id),
+      width(t.width), height(t.height),
+      channels (t.channels),
+      data (t.data),
+      auto_free(t.auto_free),
+      target(t.target),
+      freed( t.freed),
+      deleted( t.deleted)
+  {
+
+  }
+
   texture::~texture()
   {
-    if(!freed)
+    if(!freed && auto_free)
       free_image();
 
     remove();
@@ -78,7 +109,7 @@ namespace gfx
 
   void texture::dump(std::ostream& os)
   {
-    for(unsigned int i = 0; i < (width * height * channels) - 1; ++i)
+    for(unsigned int i = 0; i < (width * height * channels); ++i)
     {
       unsigned int color = data[i];
 
@@ -91,6 +122,43 @@ namespace gfx
         os << std::hex << color;
     }
     os << '\n';
+  }
+
+  void texture::set_auto_free(bool v)
+  {
+    auto_free = v;
+  }
+
+  texture& texture::operator= (const texture& t)
+  {
+    width    = t.width;
+    height   = t.height;
+    channels = t.channels;
+    data     = t.data;
+
+    auto_free = t.auto_free;
+    id        = t.id;
+    target    = t.target;
+    freed     = t.freed;
+    deleted   = t.deleted;
+
+    return *this;
+  }
+
+  texture& texture::operator= (texture&& t)
+  {
+    width    = t.width;
+    height   = t.height;
+    channels = t.channels;
+    data     = t.data;
+
+    auto_free = t.auto_free;
+    id        = t.id;
+    target    = t.target;
+    freed     = t.freed;
+    deleted   = t.deleted;
+
+    return *this;
   }
 
 }
