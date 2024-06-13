@@ -113,7 +113,7 @@ int main()
     prg.use();
     vw.set_mvp(mvp_location);
 
-    //context.clear(gfx::hex(0xebdbb2ff), GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    context.clear(gfx::hex(0xebdbb2ff), GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       vertex_buffer.draw(GL_TRIANGLE_STRIP);
     context.display();
     
