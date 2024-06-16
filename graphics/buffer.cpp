@@ -98,7 +98,7 @@ namespace gfx
       n = m_data.size();
 
     if(si < 0 || si + n > m_data.size())
-      Log::error("buffer<T>::modify is using starting index out of range [0~(m_data.size() - n)]");
+      Log::error("buffer<T>::modify is using starting index out of range [0 ~ m_data.size()-n]");
 
     GLenum buff = (m_type == VERTEX)? GL_ARRAY_BUFFER : 
                                  GL_ELEMENT_ARRAY_BUFFER;
@@ -174,6 +174,12 @@ namespace gfx
       buff += " buffer";
       Log::debug("deleting " + buff);
     }
+  }
+
+  template <typename T>
+  void buffer<T>::clear()
+  {
+    return m_data.clear();
   }
 
   //NOTE: a vbuffer can only have a vertex type and not unsigned int.

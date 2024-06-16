@@ -36,6 +36,7 @@ namespace gfx
       void resize(std::size_t size);
       void reserve(std::size_t size);
       void remove();
+      void clear();
 
       void bind();
       void unbind();
@@ -56,7 +57,7 @@ namespace gfx
       unsigned int    m_id;
       std::vector<T>  m_data;
       Type            m_type;
-      bool            m_removed;
+      bool            m_removed; //adding expected size to be allocated.
 
     public:
       friend class context;

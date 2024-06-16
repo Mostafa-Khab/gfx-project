@@ -45,6 +45,7 @@ void program::remove()
   }
 }
 
+//remember to call link after reloading
 void program::reload(std::string vshader_file, std::string fshader_file)
 {
   remove();

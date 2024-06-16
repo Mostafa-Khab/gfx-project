@@ -54,6 +54,7 @@ namespace gfx
 
   void view::ortho(float n, float f)
   {
+    //mat4x4_ortho(_p, -m_ratio, m_ratio, f, n, n, f);
     mat4x4_ortho(_p, -m_ratio, m_ratio, -1.f, 1.f, n, f);
     m_prespective = false;
   }
@@ -66,10 +67,17 @@ namespace gfx
 
   void view::data(vector3f eye, vector3f centre, vector3f up)
   {
-    vec3 eye_    { eye.x , eye.y, eye.z };
-    vec3 centre_ { centre.x , centre.y, centre.z };
-    vec3 up_     { up.x , up.y, up.z};
-    mat4x4_look_at(_v, eye_, centre_, up_);
+    //vec3 eye_    { eye.x , eye.y, eye.z };
+    //vec3 centre_ { centre.x , centre.y, centre.z };
+    //vec3 up_     { up.x , up.y, up.z};
+
+    //WARNING: this may cause the app to crash. but I will try it anyway.
+    mat4x4_look_at(
+        _v,
+        reinterpret_cast<float*>(&eye),
+        reinterpret_cast<float*>(&centre),
+        reinterpret_cast<float*>(&up)
+    );
   }
 
   mat4x4& view::mvp()

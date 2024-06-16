@@ -24,6 +24,7 @@ namespace gfx
       void use();
       void remove();
 
+      //remember to call link after reloading.
       void reload(std::string vshader_file, std::string fshader_file);
 
       bool create(std::string vshader_file, std::string fshader_file);
