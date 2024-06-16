@@ -30,7 +30,7 @@ namespace gfx
 
     void error(int error, const char* desc)
     {
-      std::cerr << "Error-> " << desc << '\n';
+      std::cerr << "error: " << desc << '\n';
     }
 
     void key(GLFWwindow* window, int key, int scancode,

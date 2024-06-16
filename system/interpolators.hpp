@@ -27,10 +27,11 @@ namespace gfx
   rgba lerp(const rgba& start, const rgba& end, float t);
   rgba lerp(rgba&& start, rgba&& end, float t);
 
-  float clamp(float v, float min, float max);
+  float clamp(float v, float min = 0.f, float max = 1.f);
 
   //ease functions
   float smoothstep(float t);
+  float smoothstepf(float t, float edge0, float edge1);
 
   namespace quad
   {

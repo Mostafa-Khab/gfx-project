@@ -58,6 +58,17 @@ namespace gfx
     return t * t * (3 - 2 * t);
   }
 
+  float smoothstepf(float t, float edge0, float edge1)
+  {
+    if(t >= 1.f)
+      return 1.f;
+    else if(t <= 0.f)
+      return 0.f;
+
+    t = clamp((t - edge0) / (edge1 - edge0));
+    return t * t * (3 - 2 * t);
+  }
+
   namespace quad
   {
     float ease_in(float x)
