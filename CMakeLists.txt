@@ -5,7 +5,7 @@ project(GFX_PROJ
       )
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
-set(DEPS_PATH deps/)
+set(DEPS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/deps)
 
 if(UNIX)
   find_package(glfw3 3.3 REQUIRED)
@@ -23,6 +23,7 @@ link_directories(graphics system ${DEPS_PATH})
 #compile all sources
 file(GLOB SOURCES graphics/*.cpp  system/*.cpp)
 
+add_library(logger STATIC ${DEPS_PATH}/logger.cpp ${DEPS_PATH}/logger.hpp)
 
 add_library(glx STATIC ${SOURCES})
 target_link_libraries(glx PUBLIC logger)
@@ -52,7 +53,7 @@ if(WIN32)
     glfw3
     opengl32
     gdi32
-    #logger
+    logger
   )
 
   target_compile_options(main PUBLIC -static-libgcc -static-libstdc++ -static)

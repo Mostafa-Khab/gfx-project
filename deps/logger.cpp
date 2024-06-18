@@ -7,6 +7,8 @@
   #include <windows.h>
 #endif /* WIN32 */
 
+std::string reset("\033[0m");
+
 Log::Log()
 {
   m_mode() = Mode::console;
@@ -53,7 +55,7 @@ void Log::info(std::string_view msg)
   {
     case Mode::console:
       {
-        std::cout << "info : " << msg << '\n';
+        std::cout << "info : " << msg << reset << '\n';
         break;
       }
     case Mode::file:
@@ -80,7 +82,7 @@ void Log::debug(std::string_view msg)
   {
     case Mode::console:
       {
-        std::cout << "debug: " << msg << '\n';
+        std::cout << "\033[32mdebug: " << msg << reset << '\n';
         break;
       }
     case Mode::file:
@@ -106,7 +108,7 @@ void Log::warn(std::string_view msg)
   {
     case Mode::console:
       {
-        std::cout << "warn: " << msg << '\n';
+        std::cout << "\033[1;35mwarn : " << msg << reset << '\n';
         break;
       }
     case Mode::file:
@@ -130,7 +132,7 @@ void Log::error(std::string_view msg)
   {
     case Mode::console:
       {
-        std::cerr << "error: " << msg << '\n';
+        std::cerr << "\033[31merror: " << msg << reset <<  '\n';
         break;
       }
     case Mode::file:
@@ -155,7 +157,7 @@ void Log::fatal(std::string_view msg)
   {
     case Mode::console:
       {
-        std::cerr << "fatal: " << msg << '\n';
+        std::cerr << "\033[1;31mfatal: " << msg << reset << '\n';
         std::exit(-1);
         break;
       }

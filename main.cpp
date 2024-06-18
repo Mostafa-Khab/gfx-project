@@ -1,4 +1,6 @@
 #include <glad/gl.h>
+
+#include <functional>
 #include <iostream>
 
 #include "graphics.hpp"
@@ -27,6 +29,7 @@ void lerp(gfx::vbuffer<gfx::vertex3d>& vbuff, const gfx::vector3f& centre, const
 
 int main()
 {
+  Log::level(Log::Level::all);
   constexpr int width  = 700;
   constexpr int height = 700;
 
