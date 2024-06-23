@@ -47,5 +47,7 @@ namespace gfx
 
   };
 
+#include "polygon.inl"
+
 }
 #endif /* !POLYGON_HPP */
