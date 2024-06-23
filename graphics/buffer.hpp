@@ -96,6 +96,8 @@ namespace gfx
 
   typedef buffer<unsigned int>    index_buf;
 
-#include "buffer.inl"
 }
+
+#include "buffer.inl"
+
 #endif
