@@ -13,7 +13,11 @@ namespace gfx
   {
     public:
       texture(int target = GL_TEXTURE_2D, int format = GL_RGB);
+
+      //NOTE: the following  constructor copies the pointer. not the actual data. so the pointer must be valid before copying the 
+      //texture to the GPU. d must be valid when calling texture::create();
       texture(int w, int h, int c, unsigned char* d, int target = GL_TEXTURE_2D, int format = GL_RGB);
+
       texture(const texture& t);
       texture(texture&& t);
      ~texture();
