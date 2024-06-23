@@ -69,6 +69,7 @@ install(
   DESTINATION include/GFX
   FILES_MATCHING 
   PATTERN "*.hpp"
+  PATTERN "*.inl"
 )
 
 install(
@@ -76,6 +77,7 @@ install(
   DESTINATION include/GFX
   FILES_MATCHING 
   PATTERN "*.hpp"
+  PATTERN "*.inl"
 )
 
 install(

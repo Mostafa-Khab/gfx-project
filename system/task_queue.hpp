@@ -6,6 +6,8 @@
 #ifndef TASK_QUEUE_HPP
 #define TASK_QUEUE_HPP
 
+#include <vector>
+
 namespace gfx
 {
 

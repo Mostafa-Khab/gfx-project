@@ -2,12 +2,12 @@
 
 #include <typeinfo>
 
-#include <debug.hpp>
+#include "../system/debug.hpp"
 
-#include "vectors.hpp"
-#include "box.hpp"
+#include "../system/vectors.hpp"
+#include "../system/box.hpp"
 #include "vertex.hpp"
-#include "buffer.hpp"
+//#include "buffer.hpp"
 
 namespace gfx
 {
