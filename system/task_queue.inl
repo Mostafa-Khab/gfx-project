@@ -1,8 +1,5 @@
-#include "task_queue.hpp"
-
 namespace gfx
-{
-  template<typename T>
+{ template<typename T>
   task_queue<T>::task_queue(float cooldown)
     : m_current(0), m_cooldown(cooldown), m_cool_progress(0), m_cooling(false)
   {
@@ -94,4 +91,19 @@ namespace gfx
     return pos;
   }
 
+  template class task_queue<task<vector2<float>>>;
+  template class task_queue<task<vector3<float>>>;
+  template class task_queue<task<rgb>>;
+  template class task_queue<task<rgba>>;
+
+  template class task_queue<quad_bezier<vector2<float>>>;
+  template class task_queue<quad_bezier<vector3<float>>>;
+  template class task_queue<quad_bezier<rgb>>;
+  template class task_queue<quad_bezier<rgba>>;
+
+  template class task_queue<cubic_bezier<vector2<float>>>;
+  template class task_queue<cubic_bezier<vector3<float>>>;
+  template class task_queue<cubic_bezier<rgb>>;
+  template class task_queue<cubic_bezier<rgba>>;
+  
 }

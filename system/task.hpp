@@ -134,5 +134,8 @@ namespace gfx
 
 }
 
+#include "task.inl"
+#include "task_queue.hpp"
+#include "task_queue.inl"
 
 #endif /* !TASK_HPP */

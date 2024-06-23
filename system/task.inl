@@ -1,7 +1,6 @@
 #include "vectors.hpp"
 #include "color.hpp"
 #include "interpolators.hpp"
-#include "task_queue.hpp"
 
 namespace gfx
 {
@@ -101,10 +100,6 @@ namespace gfx
   template class task<rgb>;
   template class task<rgba>;
 
-  template class task_queue<task<vector2<float>>>;
-  template class task_queue<task<vector3<float>>>;
-  template class task_queue<task<rgb>>;
-  template class task_queue<task<rgba>>;
 
   /******************************************************/
 
@@ -113,10 +108,6 @@ namespace gfx
   template class quad_bezier<rgb>;
   template class quad_bezier<rgba>;
 
-  template class task_queue<quad_bezier<vector2<float>>>;
-  template class task_queue<quad_bezier<vector3<float>>>;
-  template class task_queue<quad_bezier<rgb>>;
-  template class task_queue<quad_bezier<rgba>>;
 
   /******************************************************/
 
@@ -125,8 +116,4 @@ namespace gfx
   template class cubic_bezier<rgb>;
   template class cubic_bezier<rgba>;
 
-  template class task_queue<cubic_bezier<vector2<float>>>;
-  template class task_queue<cubic_bezier<vector3<float>>>;
-  template class task_queue<cubic_bezier<rgb>>;
-  template class task_queue<cubic_bezier<rgba>>;
 }

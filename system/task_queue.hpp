@@ -6,10 +6,18 @@
 #ifndef TASK_QUEUE_HPP
 #define TASK_QUEUE_HPP
 
-#include "task.hpp"
-
 namespace gfx
 {
+
+  template <typename T>
+  class task;
+
+  template <typename T>
+  class quad_bezier;
+
+  template <typename T>
+  class cubic_bezier;
+
   //a wrapper to std::vector that stores some animation tasks and play them in squence.
   template <typename T>
   class task_queue
@@ -59,6 +67,8 @@ namespace gfx
   typedef task_queue<cubic_bezier<vector3<float>>> cubic_bezier3d_queue;
   typedef task_queue<cubic_bezier<rgb>>  cubic_bezier_rgb_queue;
   typedef task_queue<cubic_bezier<rgba>> cubic_bezier_rgba_queue;
+
 }
+
 
 #endif /* !TASK_QUEUE_HPP */
