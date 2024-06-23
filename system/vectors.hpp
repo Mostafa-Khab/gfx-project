@@ -62,7 +62,10 @@ namespace gfx
   typedef vector3<int> vector3i;
   typedef vector3<double> vector3d;
 
-  float derivate(std::function<float(float)> f, float x, float h = 0.0001);
+  float derivate(std::function<float(float)> f, float x, float h = 0.000001);
 
 }
+
+#include "vectors.inl"
+
 #endif
