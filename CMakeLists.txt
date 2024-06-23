@@ -5,7 +5,8 @@ project(GFX_PROJ
       )
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
-set(DEPS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/deps)
+set(DEPS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/deps/)
+set(BUILD_SHARED_LIBS OFF)
 
 if(UNIX)
   find_package(glfw3 3.3 REQUIRED)
@@ -25,14 +26,14 @@ file(GLOB SOURCES graphics/*.cpp  system/*.cpp)
 
 add_library(logger STATIC ${DEPS_PATH}/logger.cpp ${DEPS_PATH}/logger.hpp)
 
-add_library(glx STATIC ${SOURCES})
-target_link_libraries(glx PUBLIC logger)
+add_library(gfx ${SOURCES})
+target_link_libraries(gfx PUBLIC logger)
 
 add_executable(main ${DEPS_PATH}/glad_gl.c main.cpp)
 
 if(UNIX)
   target_link_libraries(main
-      glx            #before every other library when compiling source;
+      gfx            #before every other library when compiling source;
       glfw
       OpenGL::GL
       Xrandr
@@ -48,19 +49,19 @@ endif(UNIX)
 
 if(WIN32)
   #if on windows compile logger to a lib which is found in deps folder
+  target_compile_options(main PUBLIC -static)
   target_link_libraries(main PUBLIC
-    glx
+    gfx
     glfw3
     opengl32
     gdi32
     logger
   )
 
-  target_compile_options(main PUBLIC -static-libgcc -static-libstdc++ -static)
 endif(WIN32)
 
 install(
-  TARGETS glx DESTINATION lib
+  TARGETS gfx DESTINATION lib
 )
 
 install(
