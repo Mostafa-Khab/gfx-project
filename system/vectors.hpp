@@ -2,7 +2,7 @@
  *  author : mostafa khaled 
  *  data   : Sat Feb 10 09:14:26 PM EET 2024
  *  why    : ease dealing with vectors in c++
- *  NOTE   : this is in very early development
+ *  NOTE   : some errors occur after doing some shit
 *************************/ 
 #ifndef VECTORS_HPP
 #define VECTORS_HPP
@@ -65,7 +65,5 @@ namespace gfx
   float derivate(std::function<float(float)> f, float x, float h = 0.000001);
 
 }
-
-#include "vectors.inl"
 
 #endif
