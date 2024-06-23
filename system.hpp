@@ -12,6 +12,7 @@
 #include "system/callbacks.hpp"
 #include "system/clock.hpp"
 #include "system/interpolators.hpp"
+#include "system/task_queue.hpp"
 
 
 #endif
