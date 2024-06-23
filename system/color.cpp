@@ -27,6 +27,15 @@ namespace gfx
 
   }
 
+  rgb rgb::hex(unsigned int color)
+  {
+    return rgb(
+        ((color >> 16) & 0xff) / 255.f,
+        ((color >> 8 ) & 0xff) / 255.f,
+        ((color) & 0xff) / 255.f
+        );
+  }
+
   rgba hex(unsigned int color)
   {
     return rgba(

@@ -14,8 +14,9 @@ namespace gfx{
   {
     public:
       rgb(float _r, float _g, float _b);
-
       rgb(rgba c);
+
+      rgb hex(unsigned int color);
     public:
     float r, g, b;
   };
