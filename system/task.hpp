@@ -24,6 +24,7 @@ namespace gfx
 
   //animation task
   //to accept both vector2 and vector3
+  //a lerp version that accepts T (position_type or even colors) must exist.
   template <typename T>
   class task 
   {
@@ -59,42 +60,6 @@ namespace gfx
   typedef task<vector3<float>> task3d;
   typedef task<rgb> task_rgb;
   typedef task<rgba> task_rgba;
-
-  //a wrapper to std::vector that stores some animation tasks and play them in squence.
-  template <typename T>
-  class task_queue
-  {
-    public: 
-      task_queue(float cooldown = 0.f);
-      virtual ~task_queue() = default;
-
-      void push(const T&);
-      void push(T&&);
-
-      void restart();
-      bool done();
-      bool empty();
-
-      void set_cooldown(float t);
-
-      T& front();
-
-      T& operator[] (int index);
-
-      typename T::position_type play(float dt);
-
-    protected: 
-      std::vector<T>           m_tasks;
-      int                      m_current; //the index of the current task to play.
-      float                    m_cooldown;
-      float                    m_cool_progress;
-      bool                     m_cooling;
-  };
-
-  typedef task_queue<task<vector2<float>>> task2d_queue;
-  typedef task_queue<task<vector3<float>>> task3d_queue;
-  typedef task_queue<task<rgb>>  task_rgb_queue;
-  typedef task_queue<task<rgba>> task_rgba_queue;
 
   //a task class that have extra mid point to be lerped in operator() or play in queue
   //this class can be named quad_bezier_task
@@ -132,10 +97,6 @@ namespace gfx
   typedef quad_bezier<rgb>  quad_bezier_rgb;
   typedef quad_bezier<rgba> quad_bezier_rgba;
 
-  typedef task_queue<quad_bezier<vector2<float>>> quad_bezier2d_queue;
-  typedef task_queue<quad_bezier<vector3<float>>> quad_bezier3d_queue;
-  typedef task_queue<quad_bezier<rgb>>  quad_bezier_rgb_queue;
-  typedef task_queue<quad_bezier<rgba>> quad_bezier_rgba_queue;
 
   template <typename T>
   class cubic_bezier : public task<T>
@@ -171,10 +132,6 @@ namespace gfx
   typedef cubic_bezier<rgb>  cubic_bezier_rgb;
   typedef cubic_bezier<rgba> cubic_bezier_rgba;
 
-  typedef task_queue<cubic_bezier<vector2<float>>> cubic_bezier2d_queue;
-  typedef task_queue<cubic_bezier<vector3<float>>> cubic_bezier3d_queue;
-  typedef task_queue<cubic_bezier<rgb>>  cubic_bezier_rgb_queue;
-  typedef task_queue<cubic_bezier<rgba>> cubic_bezier_rgba_queue;
 }
 
 
