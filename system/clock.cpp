@@ -34,7 +34,6 @@ namespace gfx
 
   }
 
-  //clock_T can be high_resolution_clock or system_clock or steady_clock only!
   std::chrono::system_clock::time_point datetime(int year, int month, int day)
   {
     time_t rawtime;
