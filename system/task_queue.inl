@@ -1,3 +1,5 @@
+#include "task_queue.hpp"
+
 namespace gfx
 { template<typename T>
   task_queue<T>::task_queue(float cooldown)
@@ -21,18 +23,31 @@ namespace gfx
   template<typename T>
   T& task_queue<T>::front()
   {
+    #ifdef DEBUG
+      if(m_tasks.empty())
+         Log::error("tried to access empty task_queue");
+    #endif
     return m_tasks.front();
   }
 
   template<typename T>
   T& task_queue<T>::operator[] (int index)
   {
+    #ifdef DEBUG
+      if(m_tasks.empty() || index > m_tasks.size())
+         Log::error("tried to access invalid task_queue index, or it is empty");
+    #endif
+
     return m_tasks[index];
   }
 
   template<typename T>
   bool task_queue<T>::done()
   {
+    #ifdef DEBUG
+      if(m_tasks.empty())
+         Log::error("tried to access empty task_queue done bool member");
+    #endif
     return m_tasks.back().m_done;
   }
 
@@ -91,19 +106,5 @@ namespace gfx
     return pos;
   }
 
-  template class task_queue<task<vector2<float>>>;
-  template class task_queue<task<vector3<float>>>;
-  template class task_queue<task<rgb>>;
-  template class task_queue<task<rgba>>;
-
-  template class task_queue<quad_bezier<vector2<float>>>;
-  template class task_queue<quad_bezier<vector3<float>>>;
-  template class task_queue<quad_bezier<rgb>>;
-  template class task_queue<quad_bezier<rgba>>;
-
-  template class task_queue<cubic_bezier<vector2<float>>>;
-  template class task_queue<cubic_bezier<vector3<float>>>;
-  template class task_queue<cubic_bezier<rgb>>;
-  template class task_queue<cubic_bezier<rgba>>;
   
 }

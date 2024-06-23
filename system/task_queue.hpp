@@ -11,14 +11,14 @@
 namespace gfx
 {
 
-  template <typename T>
-  class task;
+  //template <typename T>
+  //class task;
 
-  template <typename T>
-  class quad_bezier;
+  //template <typename T>
+  //class quad_bezier;
 
-  template <typename T>
-  class cubic_bezier;
+  //template <typename T>
+  //class cubic_bezier;
 
   //a wrapper to std::vector that stores some animation tasks and play them in squence.
   template <typename T>
@@ -51,24 +51,6 @@ namespace gfx
       bool                     m_cooling;
   };
 
-  typedef task_queue<task<vector2<float>>> task2d_queue;
-  typedef task_queue<task<vector3<float>>> task3d_queue;
-  typedef task_queue<task<rgb>>  task_rgb_queue;
-  typedef task_queue<task<rgba>> task_rgba_queue;
-
-
-
-  typedef task_queue<quad_bezier<vector2<float>>> quad_bezier2d_queue;
-  typedef task_queue<quad_bezier<vector3<float>>> quad_bezier3d_queue;
-  typedef task_queue<quad_bezier<rgb>>  quad_bezier_rgb_queue;
-  typedef task_queue<quad_bezier<rgba>> quad_bezier_rgba_queue;
-
-
-
-  typedef task_queue<cubic_bezier<vector2<float>>> cubic_bezier2d_queue;
-  typedef task_queue<cubic_bezier<vector3<float>>> cubic_bezier3d_queue;
-  typedef task_queue<cubic_bezier<rgb>>  cubic_bezier_rgb_queue;
-  typedef task_queue<cubic_bezier<rgba>> cubic_bezier_rgba_queue;
 
 }
 

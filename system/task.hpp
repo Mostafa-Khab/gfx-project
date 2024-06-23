@@ -9,17 +9,12 @@
 #include <functional>
 #include <vector>
 
+#include "vectors.hpp"
+#include "color.hpp"
+#include "interpolators.hpp"
+
 namespace gfx
 {
-  template <typename T>
-  struct vector2;
-
-  template <typename T>
-  struct vector3;
-
-  struct rgb;
-  struct rgba;
-
   float smoothstep(float t);
 
   //animation task
@@ -58,8 +53,8 @@ namespace gfx
 
   typedef task<vector2<float>> task2d;
   typedef task<vector3<float>> task3d;
-  typedef task<rgb> task_rgb;
-  typedef task<rgba> task_rgba;
+  typedef task<rgb>            task_rgb;
+  typedef task<rgba>           task_rgba;
 
   //a task class that have extra mid point to be lerped in operator() or play in queue
   //this class can be named quad_bezier_task
@@ -94,8 +89,8 @@ namespace gfx
 
   typedef quad_bezier<vector2<float>> quad_bezier2d;
   typedef quad_bezier<vector3<float>> quad_bezier3d;
-  typedef quad_bezier<rgb>  quad_bezier_rgb;
-  typedef quad_bezier<rgba> quad_bezier_rgba;
+  typedef quad_bezier<rgb>            quad_bezier_rgb;
+  typedef quad_bezier<rgba>           quad_bezier_rgba;
 
 
   template <typename T>
@@ -129,13 +124,66 @@ namespace gfx
 
   typedef cubic_bezier<vector2<float>> cubic_bezier2d;
   typedef cubic_bezier<vector3<float>> cubic_bezier3d;
-  typedef cubic_bezier<rgb>  cubic_bezier_rgb;
-  typedef cubic_bezier<rgba> cubic_bezier_rgba;
+  typedef cubic_bezier<rgb>            cubic_bezier_rgb;
+  typedef cubic_bezier<rgba>           cubic_bezier_rgba;
 
 }
 
 #include "task.inl"
+/******************************************************/
+
+template class gfx::task<gfx::vector2<float>>;
+template class gfx::task<gfx::vector3<float>>;
+template class gfx::task<gfx::rgb>;
+template class gfx::task<gfx::rgba>;
+
+/******************************************************/
+
+template class gfx::quad_bezier<gfx::vector2<float>>;
+template class gfx::quad_bezier<gfx::vector3<float>>;
+template class gfx::quad_bezier<gfx::rgb>;
+template class gfx::quad_bezier<gfx::rgba>;
+
+
+/******************************************************/
+
+template class gfx::cubic_bezier<gfx::vector2<float>>;
+template class gfx::cubic_bezier<gfx::vector3<float>>;
+template class gfx::cubic_bezier<gfx::rgb>;
+template class gfx::cubic_bezier<gfx::rgba>;
+
 #include "task_queue.hpp"
+
+typedef gfx::task_queue<gfx::task<gfx::vector2<float>>> task2d_queue;
+typedef gfx::task_queue<gfx::task<gfx::vector3<float>>> task3d_queue;
+typedef gfx::task_queue<gfx::task<gfx::rgb>>            task_rgb_queue;
+typedef gfx::task_queue<gfx::task<gfx::rgba>>           task_rgba_queue;
+
+typedef gfx::task_queue<gfx::quad_bezier<gfx::vector2<float>>> quad_bezier2d_queue;
+typedef gfx::task_queue<gfx::quad_bezier<gfx::vector3<float>>> quad_bezier3d_queue;
+typedef gfx::task_queue<gfx::quad_bezier<gfx::rgb>>            quad_bezier_rgb_queue;
+typedef gfx::task_queue<gfx::quad_bezier<gfx::rgba>>           quad_bezier_rgba_queue;
+
+typedef gfx::task_queue<gfx::cubic_bezier<gfx::vector2<float>>> cubic_bezier2d_queue;
+typedef gfx::task_queue<gfx::cubic_bezier<gfx::vector3<float>>> cubic_bezier3d_queue;
+typedef gfx::task_queue<gfx::cubic_bezier<gfx::rgb>>            cubic_bezier_rgb_queue;
+typedef gfx::task_queue<gfx::cubic_bezier<gfx::rgba>>           cubic_bezier_rgba_queue;
+
 #include "task_queue.inl"
+
+template class gfx::task_queue<gfx::task<gfx::vector2<float>>>;
+template class gfx::task_queue<gfx::task<gfx::vector3<float>>>;
+template class gfx::task_queue<gfx::task<gfx::rgb>>;
+template class gfx::task_queue<gfx::task<gfx::rgba>>;
+
+template class gfx::task_queue<gfx::quad_bezier<gfx::vector2<float>>>;
+template class gfx::task_queue<gfx::quad_bezier<gfx::vector3<float>>>;
+template class gfx::task_queue<gfx::quad_bezier<gfx::rgb>>;
+template class gfx::task_queue<gfx::quad_bezier<gfx::rgba>>;
+
+template class gfx::task_queue<gfx::cubic_bezier<gfx::vector2<float>>>;
+template class gfx::task_queue<gfx::cubic_bezier<gfx::vector3<float>>>;
+template class gfx::task_queue<gfx::cubic_bezier<gfx::rgb>>;
+template class gfx::task_queue<gfx::cubic_bezier<gfx::rgba>>;
 
 #endif /* !TASK_HPP */
