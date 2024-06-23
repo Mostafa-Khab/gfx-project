@@ -30,6 +30,7 @@ add_library(gfx ${SOURCES})
 target_link_libraries(gfx PUBLIC logger)
 
 add_executable(main ${DEPS_PATH}/glad_gl.c main.cpp)
+#add_compile_options(main PUBLIC "-DDEBUG")
 
 if(UNIX)
   target_link_libraries(main
