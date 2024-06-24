@@ -130,27 +130,26 @@ namespace gfx
 }
 
 #include "task.inl"
-/******************************************************/
-
-template class gfx::task<gfx::vector2<float>>;
-template class gfx::task<gfx::vector3<float>>;
-template class gfx::task<gfx::rgb>;
-template class gfx::task<gfx::rgba>;
-
-/******************************************************/
-
-template class gfx::quad_bezier<gfx::vector2<float>>;
-template class gfx::quad_bezier<gfx::vector3<float>>;
-template class gfx::quad_bezier<gfx::rgb>;
-template class gfx::quad_bezier<gfx::rgba>;
-
-
-/******************************************************/
-
-template class gfx::cubic_bezier<gfx::vector2<float>>;
-template class gfx::cubic_bezier<gfx::vector3<float>>;
-template class gfx::cubic_bezier<gfx::rgb>;
-template class gfx::cubic_bezier<gfx::rgba>;
+///******************************************************/
+//template class gfx::task<gfx::vector2<float>>;
+//template class gfx::task<gfx::vector3<float>>;
+//template class gfx::task<gfx::rgb>;
+//template class gfx::task<gfx::rgba>;
+//
+///******************************************************/
+//
+//template class gfx::quad_bezier<gfx::vector2<float>>;
+//template class gfx::quad_bezier<gfx::vector3<float>>;
+//template class gfx::quad_bezier<gfx::rgb>;
+//template class gfx::quad_bezier<gfx::rgba>;
+//
+//
+///******************************************************/
+//
+//template class gfx::cubic_bezier<gfx::vector2<float>>;
+//template class gfx::cubic_bezier<gfx::vector3<float>>;
+//template class gfx::cubic_bezier<gfx::rgb>;
+//template class gfx::cubic_bezier<gfx::rgba>;
 
 #include "task_queue.hpp"
 
@@ -171,19 +170,19 @@ typedef gfx::task_queue<gfx::cubic_bezier<gfx::rgba>>           cubic_bezier_rgb
 
 #include "task_queue.inl"
 
-template class gfx::task_queue<gfx::task<gfx::vector2<float>>>;
-template class gfx::task_queue<gfx::task<gfx::vector3<float>>>;
-template class gfx::task_queue<gfx::task<gfx::rgb>>;
-template class gfx::task_queue<gfx::task<gfx::rgba>>;
-
-template class gfx::task_queue<gfx::quad_bezier<gfx::vector2<float>>>;
-template class gfx::task_queue<gfx::quad_bezier<gfx::vector3<float>>>;
-template class gfx::task_queue<gfx::quad_bezier<gfx::rgb>>;
-template class gfx::task_queue<gfx::quad_bezier<gfx::rgba>>;
-
-template class gfx::task_queue<gfx::cubic_bezier<gfx::vector2<float>>>;
-template class gfx::task_queue<gfx::cubic_bezier<gfx::vector3<float>>>;
-template class gfx::task_queue<gfx::cubic_bezier<gfx::rgb>>;
-template class gfx::task_queue<gfx::cubic_bezier<gfx::rgba>>;
+//template class gfx::task_queue<gfx::task<gfx::vector2<float>>>;
+//template class gfx::task_queue<gfx::task<gfx::vector3<float>>>;
+//template class gfx::task_queue<gfx::task<gfx::rgb>>;
+//template class gfx::task_queue<gfx::task<gfx::rgba>>;
+//
+//template class gfx::task_queue<gfx::quad_bezier<gfx::vector2<float>>>;
+//template class gfx::task_queue<gfx::quad_bezier<gfx::vector3<float>>>;
+//template class gfx::task_queue<gfx::quad_bezier<gfx::rgb>>;
+//template class gfx::task_queue<gfx::quad_bezier<gfx::rgba>>;
+//
+//template class gfx::task_queue<gfx::cubic_bezier<gfx::vector2<float>>>;
+//template class gfx::task_queue<gfx::cubic_bezier<gfx::vector3<float>>>;
+//template class gfx::task_queue<gfx::cubic_bezier<gfx::rgb>>;
+//template class gfx::task_queue<gfx::cubic_bezier<gfx::rgba>>;
 
 #endif /* !TASK_HPP */
