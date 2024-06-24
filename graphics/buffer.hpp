@@ -9,6 +9,9 @@
 
 #include <vector>
 
+//GL_TRIANGLES           0x0004
+//GL_STATIC_DRAW         0x88E4
+
 namespace gfx
 {
 
@@ -40,13 +43,13 @@ namespace gfx
 
       void bind();
       void unbind();
-      void load_data(GLenum usage = GL_STATIC_DRAW);  //based on the data provided in the vector of vertices.
+      void load_data(unsigned int usage = 0x88E4);  //based on the data provided in the vector of vertices.
       
       //if count = 0, num will be assigned to this->size();
       void modify(int start_index = 0, int count = 0);  //modify based in m_data. update data in m_data then call this to update. GL_DYNAMIC_DRAW
 
 
-      virtual void draw(GLenum primative = GL_TRIANGLES);
+      virtual void draw(unsigned int primative = 0x0004);
 
       std::size_t size() const;
 
@@ -87,7 +90,7 @@ namespace gfx
       void modify_box(box b, int start_index = 0, bool strip = true);
 
       void set_attributes();
-      void draw(GLenum primative = GL_TRIANGLES) override;
+      void draw(unsigned int primative = 0x0004) override;
   };
 
   typedef vbuffer<vertex2d>       vertex2d_buf;
@@ -97,7 +100,5 @@ namespace gfx
   typedef buffer<unsigned int>    index_buf;
 
 }
-
-#include "buffer.inl"
 
 #endif

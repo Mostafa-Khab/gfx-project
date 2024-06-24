@@ -7,6 +7,9 @@
 #ifndef POLYGON_HPP
 #define POLYGON_HPP
 
+//GL_TRIANGLES           0x0004
+//GL_STATIC_DRAW         0x88E4
+
 namespace gfx
 {
 
@@ -18,9 +21,9 @@ namespace gfx
       ~polygon() = default;
 
       void generate_buffer_data();
-      void create_using_data(GLenum usage = GL_STATIC_DRAW);
+      void create_using_data(int usage = 0x88E4);
       
-      void load_data(GLenum usage = GL_STATIC_DRAW);
+      void load_data(int usage = 0x88E4);
       void bind();
       void unbind();
 
@@ -29,7 +32,7 @@ namespace gfx
       void setSides(int sides);
       void setData(T data);
 
-      void draw(GLenum primative = GL_TRIANGLE_FAN);
+      void draw(int primative = GL_TRIANGLE_FAN);
 
       void get_data(vbuffer<T>& verticies);
       T& operator[] (std::size_t index);
@@ -47,9 +50,6 @@ namespace gfx
 
   };
 
-
 }
-
-#include "polygon.inl"
 
 #endif /* !POLYGON_HPP */

@@ -31,7 +31,7 @@ namespace gfx
   }
 
   template<typename T>
-  void polygon<T>::create_using_data(GLenum usage)
+  void polygon<T>::create_using_data(int usage)
   {
     generate_buffer_data();
     bind();
@@ -49,7 +49,7 @@ namespace gfx
   }
 
   template<typename T>
-  void polygon<T>::load_data(GLenum usage)
+  void polygon<T>::load_data(int usage)
   {
     m_vertices.load_data(usage);
   }
@@ -91,7 +91,7 @@ namespace gfx
   }
 
   template<typename T>
-  void polygon<T>::draw(GLenum usage)
+  void polygon<T>::draw(int usage)
   {
     m_vertices.draw(usage);
   }

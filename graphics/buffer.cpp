@@ -7,7 +7,7 @@
 #include "../system/vectors.hpp"
 #include "../system/box.hpp"
 #include "vertex.hpp"
-//#include "buffer.hpp"
+#include "buffer.hpp"
 
 namespace gfx
 {
@@ -68,12 +68,12 @@ namespace gfx
   template <typename T>
   void buffer<T>::unbind()
   {
-    GLenum e = (m_type == VERTEX)? GL_ARRAY_BUFFER : GL_ELEMENT_ARRAY_BUFFER; 
+    int e = (m_type == VERTEX)? GL_ARRAY_BUFFER : GL_ELEMENT_ARRAY_BUFFER; 
     glBindBuffer(e, 0);
   }
 
   template <typename T>
-  void buffer<T>::load_data(GLenum usage)
+  void buffer<T>::load_data(unsigned int usage)
   {
     const T* pdata = &(m_data[0]);
     if(m_type == VERTEX)
@@ -100,7 +100,7 @@ namespace gfx
     if(si < 0 || si + n > m_data.size())
       Log::error("buffer<T>::modify is using starting index out of range [0 ~ m_data.size()-n]");
 
-    GLenum buff = (m_type == VERTEX)? GL_ARRAY_BUFFER : 
+    int buff = (m_type == VERTEX)? GL_ARRAY_BUFFER : 
                                  GL_ELEMENT_ARRAY_BUFFER;
 
     const T* pdata = &(m_data[si]);
@@ -114,7 +114,7 @@ namespace gfx
   }
 
   template <typename T>
-  void buffer<T>::draw(GLenum primative)
+  void buffer<T>::draw(unsigned int primative)
   {
     switch(m_type)
     {
@@ -294,7 +294,7 @@ namespace gfx
   }
 
   template <typename T>
-  void vbuffer<T>::draw(GLenum primative)
+  void vbuffer<T>::draw(unsigned int primative)
   {
     this->bind();
     this->set_attributes();

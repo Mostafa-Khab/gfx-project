@@ -6,7 +6,7 @@ project(GFX_PROJ
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 set(DEPS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/deps/)
-set(BUILD_SHARED_LIBS OFF)
+set(BUILD_SHARED_LIBS ON)
 
 if(UNIX)
   find_package(glfw3 3.3 REQUIRED)
@@ -14,7 +14,7 @@ if(UNIX)
   message(STATUS "compiling GFX for Unix")
 elseif(WIN32)
 
-  set(CMAKE_INSTALL_PREFIX /usr/i686-w64-mingw32/local/)
+  set(CMAKE_INSTALL_PREFIX /usr/x86_64-w64-mingw32/local/)
   message(STATUS "compiling GFX for WIN32")
 endif()
 
@@ -25,9 +25,11 @@ link_directories(graphics system ${DEPS_PATH})
 file(GLOB SOURCES graphics/*.cpp  system/*.cpp)
 
 add_library(logger STATIC ${DEPS_PATH}/logger.cpp ${DEPS_PATH}/logger.hpp)
+target_compile_options(logger PUBLIC "-fPIC")
 
 add_library(gfx ${SOURCES})
 target_link_libraries(gfx PUBLIC logger)
+target_compile_options(gfx PUBLIC "-fPIC")
 
 add_executable(main ${DEPS_PATH}/glad_gl.c main.cpp)
 #add_compile_options(main PUBLIC "-DDEBUG")
