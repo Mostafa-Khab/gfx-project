@@ -19,6 +19,7 @@ namespace gfx
   struct vector2
   {
     public:
+      vector2();
       explicit vector2(T x, T y);
       vector2(const vector2<T>& another) = default;
       vector2(vector2<T>&& another) = default;
@@ -51,6 +52,7 @@ namespace gfx
   struct vector3
   {
     public:
+      vector3();
       explicit vector3(T x, T y, T z);
       vector3(const vector3<T>& another) = default;
       vector3(vector3<T>&& another) = default;

@@ -314,7 +314,10 @@ namespace gfx
   template class vbuffer<vertex3dtex>;
   template class vbuffer<vertex_tex>;
 
-  template class vbuffer<vector2f>;
-  template class vbuffer<vector3f>;
+  template class buffer<vector2<float>>;
+  template class buffer<vector3<float>>;
+
+  template class vbuffer<vector2<float>>;
+  template class vbuffer<vector3<float>>;
 
 }

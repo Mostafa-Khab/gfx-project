@@ -7,6 +7,12 @@
 namespace gfx{
 
   template <typename T>
+  vector2<T>::vector2(): x(0), y(0)
+  {
+
+  }
+
+  template <typename T>
   vector2<T>::vector2(T _x, T _y): x(_x), y(_y)
   {
 
@@ -46,6 +52,12 @@ namespace gfx{
   }
 
   /************************* vector3 *************************/
+  template <typename T>
+  vector3<T>::vector3(): x(0), y(0), z(0)
+  {
+
+  }
+
   template <typename T>
   vector3<T>::vector3(T _x, T _y, T _z): x(_x), y(_y), z(_z)
   {
