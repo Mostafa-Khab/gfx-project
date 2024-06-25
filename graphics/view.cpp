@@ -2,16 +2,15 @@
 #define GLFW_INCLUDE_NONE //can this cause an error
 #include <GLFW/glfw3.h>
 
-#include "vectors.hpp"
-
 #include "view.hpp"
 
 namespace gfx
 {
 
-  view::view(int width , int height): m_width(width), m_height(height), m_ratio((width / (float)height)), m_prespective(false)
+  view::view(int width , int height): m_width(width), m_height(height), m_ratio((width / (float)height)), m_prespective(false), m_centre(0, 0, 0)
   {
     mat4x4_identity(_m);
+    instance() = this;
   }
 
 
@@ -54,7 +53,13 @@ namespace gfx
 
   void view::ortho(float min, float max)
   {
-    mat4x4_ortho(_p, m_ratio * min, m_ratio * max, m_ratio * min, m_ratio * max, -1, 1);
+    mat4x4_ortho(_p,
+                 m_ratio * min + m_centre.x,
+                 m_ratio * max + m_centre.x,
+                 m_ratio * min + m_centre.y,
+                 m_ratio * max + m_centre.y,
+                 -1 + m_centre.z,
+                 1 + m_centre.z);
     m_prespective = false;
   }
 
@@ -95,4 +100,36 @@ namespace gfx
     return _v;
   }
 
+  float view::aspect()
+  {
+    return m_ratio;
+  }
+
+  void view::set_centre(float x, float y, float z)
+  {
+    m_centre.x = x;
+    m_centre.y = y;
+    m_centre.z = z;
+  }
+
+  void view::move_centre(float x, float y, float z)
+  {
+    m_centre.x += x;
+    m_centre.y += y;
+    m_centre.z += z;
+  }
+
+  const vector3f& view::get_centre()
+  {
+    return m_centre;
+  }
+
+  void view::callback(GLFWwindow* window, int w, int h)
+  {
+    instance()->m_width  = w; 
+    instance()->m_height = h; 
+
+    instance()->m_ratio = instance()->m_width / (float)instance()->m_height;
+    glViewport(0, 0, instance()->m_width, instance()->m_height);
+  }
 }
