@@ -31,7 +31,7 @@ namespace gfx
 
   //ease functions
   float smoothstep(float t);
-  float smoothstepf(float t, float edge0, float edge1);
+  float smoothstepf(float t, float edge0 = 0.f, float edge1 = 1.f);
 
   namespace quad
   {
