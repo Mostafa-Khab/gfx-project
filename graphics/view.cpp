@@ -52,10 +52,9 @@ namespace gfx
     mat4x4_rotate_Z(_m, _m, angle);
   }
 
-  void view::ortho(float n, float f)
+  void view::ortho(float min, float max)
   {
-    //mat4x4_ortho(_p, -m_ratio, m_ratio, f, n, n, f);
-    mat4x4_ortho(_p, -m_ratio, m_ratio, -1.f, 1.f, n, f);
+    mat4x4_ortho(_p, m_ratio * min, m_ratio * max, m_ratio * min, m_ratio * max, -1, 1);
     m_prespective = false;
   }
 
@@ -67,10 +66,6 @@ namespace gfx
 
   void view::data(vector3f eye, vector3f centre, vector3f up)
   {
-    //vec3 eye_    { eye.x , eye.y, eye.z };
-    //vec3 centre_ { centre.x , centre.y, centre.z };
-    //vec3 up_     { up.x , up.y, up.z};
-
     //WARNING: this may cause the app to crash. but I will try it anyway.
     mat4x4_look_at(
         _v,

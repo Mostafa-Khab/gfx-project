@@ -98,7 +98,8 @@ int main()
     dt = cf.restart();
 
     vw.update(window);
-    vw.perspective();
+    //vw.perspective();
+    vw.ortho(-1.25, 1.25);
     vw.multiply();
 
     handleInput(window, vertex_buffer, dt, gfx::smoothstep);
