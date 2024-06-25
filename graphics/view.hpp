@@ -8,6 +8,9 @@
 
 #include "linmath.h"
 
+#include "../system/vectors.hpp"
+
+
 class GLFWwindow;
 
 namespace gfx
@@ -38,13 +41,23 @@ namespace gfx
      mat4x4& p();
      mat4x4& v();
 
+     float aspect();
 
+     static void callback(GLFWwindow* window, int width, int height);
+
+     void set_instance_current();
+     static view*& instance() { static view* val = nullptr; return val;}
+
+     void set_centre (float x, float y, float z = 0);
+     void move_centre(float x, float y, float z = 0);
+     const vector3<float>& get_centre();
     private:
-      mat4x4    _mvp, _m, _p, _v;
-      int       m_width;
-      int       m_height;
-      float     m_ratio;
-      bool      m_prespective;
+      mat4x4          _mvp, _m, _p, _v;
+      int             m_width;
+      int             m_height;
+      float           m_ratio;
+      bool            m_prespective;
+      vector3<float>  m_centre;
   };
 
 }
