@@ -29,7 +29,7 @@ namespace gfx
      void rotate_Y(float angle);
      void rotate_Z(float angle);
 
-     void ortho(float n = 1, float f = -1);
+     void ortho(float min = -1, float max = 1);
      void perspective(float fov = 3.1415 / 4, float n = 0, float f = 10);
      void data(vector3<float> eye, vector3<float> center, vector3<float> up);
 
