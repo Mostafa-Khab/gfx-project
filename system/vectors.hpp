@@ -31,9 +31,18 @@ namespace gfx
 
       float  distance  (const vector2<T>& another);
 
+      struct attributes;
+      static void set_attributes();
     public:
       T x, y;
   };
+
+  template <typename T>
+  struct vector2<T>::attributes
+  {
+    static int& vpos_location() { static int val = 0; return val; }
+  };
+
   typedef vector2<int> vector2i;
   typedef vector2<float> vector2f;
   typedef vector2<double> vector2d;
@@ -54,10 +63,19 @@ namespace gfx
 
       float  distance  (const vector3<T>& another);
 
+      struct attributes;
+      static void set_attributes();
 
     public:
       T x, y, z;
   };
+
+  template <typename T>
+  struct vector3<T>::attributes
+  {
+    static int& vpos_location() { static int val = 0; return val; }
+  };
+
   typedef vector3<float> vector3f;
   typedef vector3<int> vector3i;
   typedef vector3<double> vector3d;

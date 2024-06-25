@@ -1,3 +1,5 @@
+#include <glad/gl.h>
+
 #include <cmath>
 #include <functional>
 #include "vectors.hpp"
@@ -35,6 +37,15 @@ namespace gfx{
     return std::sqrt(temp.x * temp.x + temp.y * temp.y);
   }
 
+  //remember to set vpos_location from your shader program!!
+  template <typename T>
+  void vector2<T>::set_attributes()
+  {
+    glEnableVertexAttribArray(attributes::vpos_location());
+    glVertexAttribPointer(attributes::vpos_location(), 2, GL_FLOAT, GL_FALSE, sizeof(vector2<T>), (void*)(0));
+  }
+
+  /************************* vector3 *************************/
   template <typename T>
   vector3<T>::vector3(T _x, T _y, T _z): x(_x), y(_y), z(_z)
   {
@@ -64,6 +75,14 @@ namespace gfx{
   {
     vector3<T> temp = *this - another;
     return std::sqrt(temp.x * temp.x + temp.y * temp.y + temp.z * temp.z);
+  }
+
+  //remember to set vpos_location from your shader program!!
+  template <typename T>
+  void vector3<T>::set_attributes()
+  {
+    glEnableVertexAttribArray(attributes::vpos_location());
+    glVertexAttribPointer(attributes::vpos_location(), 3, GL_FLOAT, GL_FALSE, sizeof(vector3<T>), (void*)(0));
   }
 
   float derivate(std::function<float(float)> f, float x, float h)

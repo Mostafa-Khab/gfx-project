@@ -302,6 +302,7 @@ namespace gfx
     buffer<T>::draw(primative);
   }
 
+  template class buffer<unsigned int>;
 
   template class buffer<vertex2d>;
   template class buffer<vertex3d>;
@@ -313,6 +314,7 @@ namespace gfx
   template class vbuffer<vertex3dtex>;
   template class vbuffer<vertex_tex>;
 
-  template class buffer<unsigned int>;
+  template class vbuffer<vector2f>;
+  template class vbuffer<vector3f>;
 
 }
